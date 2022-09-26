@@ -65,15 +65,15 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
           if (starRadius2 > 2) {
             console.log(
               "Temp: " +
-                starTemp +
-                "\nRadius: " +
-                starRadius +
-                "\nRadius2: " +
-                starRadius2 +
-                "\nMass: " +
-                star.mass_i +
-                "\nLum: " +
-                star.lum_i
+              starTemp +
+              "\nRadius: " +
+              starRadius +
+              "\nRadius2: " +
+              starRadius2 +
+              "\nMass: " +
+              star.mass_i +
+              "\nLum: " +
+              star.lum_i
             );
           }
 
@@ -147,7 +147,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
             opacity={1}
           />
           <Select enabled={true}>
-            <MiEstrella key={1} position={[0, 0, 0]} scale={1} />
+            <MiEstrella key={1} position={[0, 0, 0]} scale={10} />
             {createStars(starCluster)}
           </Select>
         </EffectComposer>

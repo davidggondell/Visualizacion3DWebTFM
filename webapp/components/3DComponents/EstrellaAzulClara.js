@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-export const EstrellaAzulClara = (props) => {
+export const EstrellaAzulClara = ({ position, scale }) => {
   const startRotation = Math.random() * Math.PI;
   const starRef = useRef();
   const { nodes, materials } = useGLTF("/EstrellaAzulClara.gltf");
@@ -12,14 +12,14 @@ export const EstrellaAzulClara = (props) => {
   });
 
   return (
-    <group {...props} dispose={null}>
+    <group position={position} dispose={null}>
       <mesh
         ref={starRef}
         geometry={nodes.EsferaBaked.geometry}
         material={materials.MaterialBaked}
         material-emissive="white"
         material-emissiveIntensity={0.5}
-        scale={3}
+        scale={2 * scale}
       ></mesh>
     </group>
   );

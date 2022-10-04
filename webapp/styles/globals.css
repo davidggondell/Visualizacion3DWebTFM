@@ -12,6 +12,7 @@ body {
 canvas {
   border: none;
   outline: none;
+  touch-action: none;
 }
 
 #__next {

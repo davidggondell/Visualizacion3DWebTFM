@@ -40,8 +40,10 @@ export const Player = ({ dragInput }) => {
     const rotx = dragInput.current.y / 10 - cameraState.current.degx;
     const roty = dragInput.current.x / 10 - cameraState.current.degy;
     if (dragInput.current.down) {
-      camera.rotateX(deg2rad(rotx));
-      camera.rotateY(deg2rad(roty));
+      if (cameraState.current.moving) {
+        camera.rotateX(deg2rad(rotx));
+        camera.rotateY(deg2rad(roty));
+      }
       cameraState.current = {
         degx: dragInput.current.y / 10,
         degy: dragInput.current.x / 10,

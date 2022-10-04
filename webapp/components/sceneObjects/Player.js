@@ -3,31 +3,57 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useSphere } from "@react-three/cannon";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
 import { useVariable } from "../hooks/useVariable";
+import { useDrag } from "@use-gesture/react";
+import { degToRad } from "three/src/math/MathUtils";
 
-export const Player = ({ stop, degx, degy, degz }) => {
-  const x = useRef(0);
-  const y = useRef(0);
-  const z = useRef(5);
-  const deg2rad = (degrees) => degrees * (Math.PI / 180);
+export const Player = ({ dragInput }) => {
   const { camera, scene } = useThree();
   //wasd input
-  const pressed = useKeyboardInput(["w", "a", "s", "d"]);
+  const pressed = useKeyboardInput(["w", "a", "s", "d", "c", " "]);
   //Converting wasd input to a ref
   const input = useVariable(pressed);
+  const cameraState = useRef({ degx: 0, degy: 0, moving: false });
 
-  useFrame((_) => {
-    camera.rotation.set(deg2rad(degx.current), deg2rad(degy.current), deg2rad(degz.current));
+  const deg2rad = (degrees) => degrees * (Math.PI / 180);
 
-    if (!stop.current) {
-      const zforward = -Math.cos(deg2rad(degx.current)) * Math.cos(deg2rad(degy.current));
-      const yforward = Math.sin(deg2rad(degx.current)) * Math.cos(deg2rad(degz.current));
-      const xforward = Math.sin(deg2rad(degy.current)) * Math.sin(deg2rad(degz.current));
-      x.current = x.current + xforward;
-      y.current = y.current + yforward;
-      z.current = z.current + zforward;
-      camera.position.set(x.current, y.current, z.current);
+  useFrame(() => {
+    const { w, s, a, d, c } = input.current;
+    const space = input.current[" "];
+    if (w) {
+      camera.translateZ(-3);
     }
-
+    if (s) {
+      camera.translateZ(3);
+    }
+    if (a) {
+      camera.translateX(-3);
+    }
+    if (d) {
+      camera.translateX(3);
+    }
+    if (c) {
+      camera.translateY(-3);
+    }
+    if (space) {
+      camera.translateY(3);
+    }
+    const rotx = dragInput.current.y / 10 - cameraState.current.degx;
+    const roty = dragInput.current.x / 10 - cameraState.current.degy;
+    if (dragInput.current.down) {
+      camera.rotateX(deg2rad(rotx));
+      camera.rotateY(deg2rad(roty));
+      cameraState.current = {
+        degx: dragInput.current.y / 10,
+        degy: dragInput.current.x / 10,
+        moving: true,
+      };
+    } else {
+      if (cameraState.current.moving) {
+        camera.rotateX(deg2rad(rotx));
+        camera.rotateY(deg2rad(roty));
+        cameraState.current = { degx: 0, degy: 0, moving: false };
+      }
+    }
   });
   return <></>;
 };

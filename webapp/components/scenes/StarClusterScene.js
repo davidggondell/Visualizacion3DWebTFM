@@ -39,6 +39,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
       xCD = xCD + star.x * star.mass_i;
       yCD = yCD + star.y * star.mass_i;
       zCD = zCD + star.z * star.mass_i;
+      console.table({ sumMass: sumMass, xCD: xCD, yCD: yCD, zCD: zCD });
     });
     if (sumMass != 0) {
       return { x: xCD / sumMass, y: yCD / sumMass, z: zCD / sumMass };
@@ -53,40 +54,21 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
     return (
       <>
         {starCluster.map((star, i) => {
-          const x = (star.x - massCenter.x) * 125;
-          const y = (star.y - massCenter.y) * 125;
-          const z = (star.z - massCenter.z) * 125;
+          const x = (star.x - massCenter.x) * 200;
+          const y = (star.y - massCenter.y) * 200;
+          const z = (star.z - massCenter.z) * 200;
           const starTemp = 10 ** star.temp_i;
-          const starLum = 10 ** star.lum_i;
-          const starRadius = Math.sqrt(
-            starLum / (boltz * starTemp ** 4 * 4 * Math.PI)
-          );
-          const starRadius2 = (solarTemp / starTemp) ** 2 * Math.sqrt(starLum);
-          if (starRadius2 > 2) {
-            console.log(
-              "Temp: " +
-                starTemp +
-                "\nRadius: " +
-                starRadius +
-                "\nRadius2: " +
-                starRadius2 +
-                "\nMass: " +
-                star.mass_i +
-                "\nLum: " +
-                star.lum_i
-            );
-          }
 
           if (starTemp > 12000) {
             return (
-              <EstrellaAzul key={i} position={[x, y, z]} scale={star.mass_i} />
+              <EstrellaAzul key={i} position={[x, y, z]} scale={star.Radius} />
             );
           } else if (starTemp > brightBlueStarMinTemp) {
             return (
               <EstrellaAzulClara
                 key={i}
                 position={[x, y, z]}
-                scale={star.mass_i}
+                scale={star.Radius}
               />
             );
           } else if (starTemp > whiteStarMinTemp) {
@@ -94,7 +76,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
               <EstrellaBlanca
                 key={i}
                 position={[x, y, z]}
-                scale={star.mass_i}
+                scale={star.Radius}
               />
             );
           } else if (starTemp > brightYellowStarMinTemp) {
@@ -102,24 +84,24 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
               <EstrellaAmarillaClara
                 key={i}
                 position={[x, y, z]}
-                scale={star.mass_i}
+                scale={star.Radius}
               />
             );
           } else if (starTemp > yellowStarMinTemp) {
             return (
-              <MiEstrella key={i} position={[x, y, z]} scale={star.mass_i} />
+              <MiEstrella key={i} position={[x, y, z]} scale={star.Radius} />
             );
           } else if (starTemp > orangeStarMinTemp) {
             return (
               <EstrellaNaranja
                 key={i}
                 position={[x, y, z]}
-                scale={star.mass_i}
+                scale={star.Radius}
               />
             );
           } else {
             return (
-              <EstrellaRoja key={i} position={[x, y, z]} scale={star.mass_i} />
+              <EstrellaRoja key={i} position={[x, y, z]} scale={star.Radius} />
             );
           }
         })}
@@ -152,7 +134,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
           </Select>
         </EffectComposer>
       </Selection>
-      <Stars radius={10000} depth={5} count={1000} />
+      {/* <Stars radius={10000} depth={5} count={1000} /> */}
     </>
   );
 };

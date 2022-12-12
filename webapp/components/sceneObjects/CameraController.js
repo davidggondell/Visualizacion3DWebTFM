@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Physics } from "@react-three/cannon";
 import { OrbitControls } from "@react-three/drei";
-import { Player } from "../sceneObjects/Player";
+import { Player } from "./Player";
 
 export const CameraController = forwardRef((props, ref) => {
   const [enabled, setEnabled] = useState(false);

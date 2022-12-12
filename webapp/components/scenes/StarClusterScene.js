@@ -39,7 +39,6 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
       xCD = xCD + star.x * star.mass_i;
       yCD = yCD + star.y * star.mass_i;
       zCD = zCD + star.z * star.mass_i;
-      console.table({ sumMass: sumMass, xCD: xCD, yCD: yCD, zCD: zCD });
     });
     if (sumMass != 0) {
       return { x: xCD / sumMass, y: yCD / sumMass, z: zCD / sumMass };

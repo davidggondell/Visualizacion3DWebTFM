@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import Head from "next/head";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const theme = createTheme({
     palette: {
       mode: "dark",
@@ -24,4 +24,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;

@@ -30,3 +30,5 @@ export const CameraController = forwardRef((props, ref) => {
     </>
   );
 });
+
+CameraController.displayName = "CameraController";

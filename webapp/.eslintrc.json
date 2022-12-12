@@ -1,3 +1,20 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "react/no-unknown-property": [
+      1,
+      {
+        "ignore": [
+          "position",
+          "dispose",
+          "geometry",
+          "material",
+          "material-emissive",
+          "material-emissiveIntensity",
+          "intensity",
+          "material-toneMapped"
+        ]
+      }
+    ]
+  }
 }

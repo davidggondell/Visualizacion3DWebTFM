@@ -1,13 +1,16 @@
-import React, { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useKeyboardInput } from "../hooks/useKeyboardInput";
-import { useVariable } from "../hooks/useVariable";
 import {
   createUseGesture,
   dragAction,
   pinchAction,
   wheelAction,
 } from "@use-gesture/react";
+import React, { useRef } from "react";
+import { useKeyboardInput } from "../hooks/useKeyboardInput";
+import { useVariable } from "../hooks/useVariable";
+import { deg2rad } from "../utils/physicsFunctions";
+
+const moveSpeed = 3;
 
 export const Player = ({ canvasRef, enabled }) => {
   const { camera, scene } = useThree();
@@ -18,8 +21,6 @@ export const Player = ({ canvasRef, enabled }) => {
   const cameraState = useRef({ degx: 0, degy: 0, moving: false });
   const dragInput = useRef({ x: 0, y: 0, down: false });
   const pinchInput = useRef(0);
-
-  const deg2rad = (degrees) => degrees * (Math.PI / 180);
 
   //add gestures to the canvas through its reference
   const useGesture = createUseGesture([dragAction, pinchAction, wheelAction]);
@@ -34,7 +35,7 @@ export const Player = ({ canvasRef, enabled }) => {
       onPinch: ({ first, da: [distance, _] }) => {
         if (enabled) {
           if (!first) {
-            camera.translateZ(-1 * (distance - pinchInput.current));
+            camera.translateZ(-0.8 * (distance - pinchInput.current));
           }
           pinchInput.current = distance;
         }
@@ -42,7 +43,7 @@ export const Player = ({ canvasRef, enabled }) => {
       onWheel: ({ active, event, direction: [, dy] }) => {
         if (enabled) {
           if (active) {
-            camera.translateZ(10 * dy);
+            camera.translateZ(15 * dy);
           }
         }
       },
@@ -58,22 +59,22 @@ export const Player = ({ canvasRef, enabled }) => {
     const { w, s, a, d, c } = input.current;
     const space = input.current[" "];
     if (w) {
-      camera.translateZ(-3);
+      camera.translateZ(-moveSpeed);
     }
     if (s) {
-      camera.translateZ(3);
+      camera.translateZ(moveSpeed);
     }
     if (a) {
-      camera.translateX(-3);
+      camera.translateX(-moveSpeed);
     }
     if (d) {
-      camera.translateX(3);
+      camera.translateX(moveSpeed);
     }
     if (c) {
-      camera.translateY(-3);
+      camera.translateY(-moveSpeed);
     }
     if (space) {
-      camera.translateY(3);
+      camera.translateY(moveSpeed);
     }
     const rotx = dragInput.current.y / 10 - cameraState.current.degx;
     const roty = dragInput.current.x / 10 - cameraState.current.degy;

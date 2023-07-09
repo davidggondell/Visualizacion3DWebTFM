@@ -12,28 +12,30 @@ export const CameraControlsButton = ({ onChange }) => {
   };
 
   return (
-    <Tabs
-      value={value}
-      indicatorColor="primary"
-      textColor="primary"
-      onChange={handleChange}
-    >
-      <Tab
-        label={
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Typography sx={{ padding: 1 }}>Orbit</Typography>
-            <AutoModeIcon />
-          </Box>
-        }
-      />
-      <Tab
-        label={
-          <Box sx={{ alignItems: "center", display: "flex" }}>
-            <Typography sx={{ padding: 1 }}>First Person</Typography>
-            <RocketLaunchIcon />
-          </Box>
-        }
-      />
-    </Tabs>
+    <>
+      <Tabs
+        value={value}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={handleChange}
+      >
+        <Tab
+          label={
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Typography sx={{ padding: 1 }}>Orbit</Typography>
+              <AutoModeIcon />
+            </Box>
+          }
+        />
+        <Tab
+          label={
+            <Box sx={{ alignItems: "center", display: "flex" }}>
+              <Typography sx={{ padding: 1 }}>First Person</Typography>
+              <RocketLaunchIcon />
+            </Box>
+          }
+        />
+      </Tabs>
+    </>
   );
 };

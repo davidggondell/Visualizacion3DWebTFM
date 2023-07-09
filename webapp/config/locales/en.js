@@ -1,0 +1,51 @@
+export default {
+  "general.from": "From",
+  "general.to": "To",
+
+  "star.class.O": "O",
+  "star.class.B": "B",
+  "star.class.A": "A",
+  "star.class.F": "F",
+  "star.class.G": "G",
+  "star.class.K": "K",
+  "star.class.M": "M",
+
+  "star.class.O.minTemp": "33.000 K",
+  "star.class.B.minTemp": "10.000 K",
+  "star.class.B.maxTemp": "33.000 K",
+  "star.class.A.minTemp": "7.500 K",
+  "star.class.A.maxTemp": "10.000 K",
+  "star.class.F.minTemp": "6.000 K",
+  "star.class.F.maxTemp": "7.500 K",
+  "star.class.G.minTemp": "5.200 K",
+  "star.class.G.maxTemp": "6.000 K",
+  "star.class.K.minTemp": "3.700 K",
+  "star.class.K.maxTemp": "5.200 K",
+  "star.class.M.maxTemp": "3.700 K",
+
+  "sidebar.changeCluster": "Change cluster",
+  "sidebar.cameraControls": "Camera controls",
+  "sidebar.timeControls": "Time controls",
+  "sidebar.starFilters": "Star filters",
+  "sidebar.myClusters": "My clusters",
+
+  "filtersModal.title": "Star filters",
+  "filtersModal.starClassification": "Star classification",
+  "filtersModal.temperature": "Temperature",
+  "filtersModal.mass": "Mass",
+  "filtersModal.temp": "T",
+  "filtersModal.reset": "Reset filters",
+  "filtersModal.accept": "Accept",
+
+  "sliderTypes.disabled": "Disabled",
+  "sliderTypes.activated": "Activated",
+  "sliderTypes.inverted": "Inverted",
+
+  "timeControls.rewind": "Rewind",
+  "timeControls.forward": "Forward",
+  "timeControls.year": "Year:",
+  "timeControls.speed": "years/s",
+
+  "cameraControls.orbit": "Orbit",
+  "cameraControls.firstPerson": "First person",
+};

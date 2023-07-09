@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { getStarSize } from "../utils/physicsFunctions";
 
 export const EstrellaNaranja = ({ position, scale }) => {
   const startRotation = Math.random() * Math.PI;
@@ -17,7 +18,7 @@ export const EstrellaNaranja = ({ position, scale }) => {
         ref={starRef}
         geometry={nodes.EsferaBaked.geometry}
         material={materials.MaterialBaked}
-        scale={2 * scale}
+        scale={getStarSize(scale)}
       ></mesh>
     </group>
   );

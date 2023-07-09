@@ -1,0 +1,51 @@
+export default {
+  "general.from": "Desde",
+  "general.to": "Hasta",
+
+  "star.class.O": "O",
+  "star.class.B": "B",
+  "star.class.A": "A",
+  "star.class.F": "F",
+  "star.class.G": "G",
+  "star.class.K": "K",
+  "star.class.M": "M",
+
+  "star.class.O.minTemp": "33.000 K",
+  "star.class.B.minTemp": "10.000 K",
+  "star.class.B.maxTemp": "33.000 K",
+  "star.class.A.minTemp": "7.500 K",
+  "star.class.A.maxTemp": "10.000 K",
+  "star.class.F.minTemp": "6.000 K",
+  "star.class.F.maxTemp": "7.500 K",
+  "star.class.G.minTemp": "5.200 K",
+  "star.class.G.maxTemp": "6.000 K",
+  "star.class.K.minTemp": "3.700 K",
+  "star.class.K.maxTemp": "5.200 K",
+  "star.class.M.maxTemp": "3.700 K",
+
+  "sidebar.changeCluster": "Cambiar Cúmulo",
+  "sidebar.cameraControls": "Controles de cámara",
+  "sidebar.timeControls": "Control del tiempo",
+  "sidebar.starFilters": "Filtros de estrellas",
+  "sidebar.myClusters": "Mis cúmulos",
+
+  "filtersModal.title": "Filtros de estrellas",
+  "filtersModal.starClassification": "Clasificación estelar",
+  "filtersModal.temperature": "Temperatura",
+  "filtersModal.mass": "Masa",
+  "filtersModal.temp": "T",
+  "filtersModal.reset": "Restablecer filtros",
+  "filtersModal.accept": "Aceptar",
+
+  "sliderTypes.disabled": "Inactivo",
+  "sliderTypes.activated": "Activo",
+  "sliderTypes.inverted": "Invertido",
+
+  "timeControls.rewind": "Retroceder",
+  "timeControls.forward": "Avanzar",
+  "timeControls.year": "Año:",
+  "timeControls.speed": "años/s",
+
+  "cameraControls.orbit": "Órbita",
+  "cameraControls.firstPerson": "Primera persona",
+};

@@ -1,19 +1,16 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import {
-  createUseGesture,
-  dragAction,
-  pinchAction,
-  wheelAction,
-} from "@use-gesture/react";
-import React, { useRef } from "react";
+import { createUseGesture, dragAction, pinchAction, wheelAction } from "@use-gesture/react";
+import React, { useRef, useContext } from "react";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
 import { useVariable } from "../hooks/useVariable";
 import { deg2rad } from "../utils/physicsFunctions";
+import { RootCanvasContext } from "../scenes/RootCanvasContext";
 
 const moveSpeed = 3;
 
-export const Player = ({ canvasRef, enabled }) => {
+export const Player = ({ enabled }) => {
   const { camera, scene } = useThree();
+  const { canvasRef } = useContext(RootCanvasContext);
   //wasd input
   const pressed = useKeyboardInput(["w", "a", "s", "d", "c", " "]);
   //Converting wasd input to a ref
@@ -51,7 +48,7 @@ export const Player = ({ canvasRef, enabled }) => {
     {
       target: canvasRef,
       eventOptions: { passive: false },
-    }
+    },
   );
 
   //check camera movement on each frame

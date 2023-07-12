@@ -1,7 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { themeValues } from "../utils/themeValues";
+import { themeValues } from "../../utils/themeValues";
 
 export const sliderTypes = {
   disabled: "disabled",
@@ -21,14 +21,19 @@ export const SliderTypePicker = ({ value, onChange }) => {
           onChange(value);
         }
       }}
+      sx={{
+        "& .MuiToggleButtonGroup-grouped": {
+          color: themeValues.palette.text.primary,
+        },
+      }}
     >
-      <ToggleButton sx={{ color: themeValues.palette.primary.main }} value={sliderTypes.disabled}>
+      <ToggleButton sx={{ color: themeValues.palette.text.primary }} value={sliderTypes.disabled}>
         <FormattedMessage id="sliderTypes.disabled" />
       </ToggleButton>
-      <ToggleButton sx={{ color: themeValues.palette.primary.main }} value={sliderTypes.activated}>
+      <ToggleButton sx={{ color: themeValues.palette.text.primary }} value={sliderTypes.activated}>
         <FormattedMessage id="sliderTypes.activated" />
       </ToggleButton>
-      <ToggleButton sx={{ color: themeValues.palette.primary.main }} value={sliderTypes.inverted}>
+      <ToggleButton sx={{ color: themeValues.palette.text.primary }} value={sliderTypes.inverted}>
         <FormattedMessage id="sliderTypes.inverted" />
       </ToggleButton>
     </ToggleButtonGroup>

@@ -1,12 +1,31 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
-import { AppControlsContext } from "./AppControlsContext";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, IconButton, Slide, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import { TrapezeBox } from "./BaseComponents/TrapezeBox";
+import { TrapezeBox } from "../baseComponents/TrapezeBox";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { useTheme } from "@emotion/react";
 import { FormattedMessage } from "react-intl";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { getCameraControlsOpened } from "../selectors";
+import { closeCameraControls } from "../actions";
+import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
+
+const FullWidthDiv = ({ fullWidth }) => {
+  const themeValues = useTheme();
+
+  return (
+    <div
+      style={{
+        height: "95%",
+        width: "1px",
+        backgroundColor: themeValues.palette.text.primary,
+        marginLeft: "8px",
+        marginRight: "8px",
+      }}
+    />
+  );
+};
 
 export const cameraTypes = {
   orbit: "orbit",
@@ -14,7 +33,8 @@ export const cameraTypes = {
 };
 
 export const CameraControls = () => {
-  const { cameraControlsOpened, setCameraControlsOpened } = useContext(AppControlsContext);
+  const dispatch = useDispatch();
+  const cameraControlsOpened = useSelector(getCameraControlsOpened);
   const [slideOpened, setSlideOpened] = useState(cameraControlsOpened);
   const [cameraType, setCameraType] = useState(cameraTypes.orbit);
   const themeValues = useTheme();
@@ -23,9 +43,17 @@ export const CameraControls = () => {
     setTimeout(() => setSlideOpened(cameraControlsOpened), 200);
   }, [cameraControlsOpened]);
 
+  useEffect(() => {
+    if (cameraType == cameraTypes.orbit) {
+      setOrbitControls(dispatch);
+    } else if (cameraType == cameraTypes.firstPerson) {
+      setPlayerControls(dispatch);
+    }
+  }, [cameraType]);
+
   const onClose = useCallback(() => {
     setSlideOpened(false);
-    setTimeout(() => setCameraControlsOpened(false), 200);
+    setTimeout(() => closeCameraControls(dispatch), 200);
   }, []);
 
   return (
@@ -108,9 +136,7 @@ export const CameraControls = () => {
                         </Typography>
                       </Stack>
                     </ToggleButton>
-                    <Box
-                      sx={{ height: "100%", width: "1px", backgroundColor: themeValues.palette.text.primary, mx: 1 }}
-                    />
+                    <FullWidthDiv />
                     <ToggleButton size="small" sx={{ height: 40 }} value={cameraTypes.firstPerson}>
                       <Stack direction="row" spacing={1}>
                         <Typography>

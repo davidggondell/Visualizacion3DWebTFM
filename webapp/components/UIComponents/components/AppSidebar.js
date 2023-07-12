@@ -1,20 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { TrapezeButton } from "./BaseComponents/TrapezeButton";
-import { Triangle } from "./BaseComponents/Triangle";
-import { themeValues } from "../utils/themeValues";
-import { TrapezeBox } from "./BaseComponents/TrapezeBox";
+import { TrapezeButton } from "../baseComponents/TrapezeButton";
+import { Triangle } from "../baseComponents/Triangle";
+import { themeValues } from "../../utils/themeValues";
+import { TrapezeBox } from "../baseComponents/TrapezeBox";
 import { Grid, Typography } from "@mui/material";
-import { useWindowDimensions } from "../hooks/useWindowDimensions";
-import { GalaxyIcon } from "../../icons/GalaxyIcon";
-import { TimeIcon } from "../../icons/TimeIcon";
-import { CameraIcon } from "../../icons/CameraIcon";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { GalaxyIcon } from "../../../icons/GalaxyIcon";
+import { TimeIcon } from "../../../icons/TimeIcon";
+import { CameraIcon } from "../../../icons/CameraIcon";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { AstronautIcon } from "../../icons/AstronautIcon";
-import { AppControlsContext } from "./AppControlsContext";
+import { AstronautIcon } from "../../../icons/AstronautIcon";
 import Slide from "@mui/material/Slide";
 import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { getFiltersModalOpened, getSidebarOpened } from "../selectors";
+import { closeSidebar, openCameraControls, openFiltersModal, openSidebar, openTimeControls } from "../actions";
 
 const GridItem = ({ children, ...props }) => {
   return (
@@ -54,17 +56,17 @@ const BoxCustomDivider = () => (
 
 const drawerBleeding = 40;
 export const AppSidebar = () => {
-  const { filtersModalOpened, setFiltersModalOpened, setTimeControlsOpened, setCameraControlsOpened } =
-    useContext(AppControlsContext);
-  const [open, setOpen] = React.useState(false);
+  const open = useSelector(getSidebarOpened);
+  const filtersModalOpened = useSelector(getFiltersModalOpened);
+  const dispatch = useDispatch();
   const { height } = useWindowDimensions(0.7);
 
   return (
     <SwipeableDrawer
       anchor={"right"}
       open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={() => closeSidebar(dispatch)}
+      onOpen={() => openSidebar(dispatch)}
       swipeAreaWidth={drawerBleeding}
       disableSwipeToOpen={true}
       ModalProps={{
@@ -104,7 +106,7 @@ export const AppSidebar = () => {
                 pointerEvents: "all",
               }}
             >
-              <TrapezeButton direction="left" onClick={() => setOpen(!open)}>
+              <TrapezeButton direction="left" onClick={() => (open ? closeSidebar(dispatch) : openSidebar(dispatch))}>
                 <Triangle
                   direction={open ? "right" : "left"}
                   height={15}
@@ -126,7 +128,7 @@ export const AppSidebar = () => {
             <BoxCustomDivider />
             <GridItem
               onClick={() => {
-                setOpen(false);
+                closeSidebar(dispatch);
               }}
             >
               <GalaxyIcon width={34} height={34} fill={themeValues.palette.primary.main} />
@@ -137,9 +139,8 @@ export const AppSidebar = () => {
             <BoxCustomDivider />
             <GridItem
               onClick={() => {
-                setOpen(false);
-                setTimeControlsOpened(false);
-                setCameraControlsOpened(true);
+                closeSidebar(dispatch);
+                openCameraControls(dispatch);
               }}
             >
               <CameraIcon width={30} height={30} fill={themeValues.palette.primary.main} />
@@ -150,9 +151,8 @@ export const AppSidebar = () => {
             <BoxCustomDivider />
             <GridItem
               onClick={() => {
-                setOpen(false);
-                setCameraControlsOpened(false);
-                setTimeControlsOpened(true);
+                closeSidebar(dispatch);
+                openTimeControls(dispatch);
               }}
             >
               <TimeIcon width={30} height={30} fill={themeValues.palette.primary.main} />
@@ -163,8 +163,8 @@ export const AppSidebar = () => {
             <BoxCustomDivider />
             <GridItem
               onClick={() => {
-                setOpen(false);
-                setFiltersModalOpened(true);
+                closeSidebar(dispatch);
+                openFiltersModal(dispatch);
               }}
             >
               <FilterAltOutlinedIcon sx={{ width: 34, height: 34, color: themeValues.palette.primary.main }} />
@@ -175,7 +175,7 @@ export const AppSidebar = () => {
             <BoxCustomDivider />
             <GridItem
               onClick={() => {
-                setOpen(false);
+                closeSidebar(dispatch);
               }}
             >
               <AstronautIcon width={30} height={30} fill={themeValues.palette.primary.main} />

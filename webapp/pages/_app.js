@@ -4,13 +4,15 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { themeValues } from "../components/utils/themeValues";
 import { IntlProvider } from "react-intl";
 import { useNavigatorLocale } from "../components/hooks/useNavigatorLocale";
+import { Provider } from "react-redux";
+import { store } from "../components/utils/store/store";
 
 function App({ Component, pageProps }) {
   const theme = createTheme(themeValues);
   const locale = useNavigatorLocale();
 
   return (
-    <>
+    <Provider store={store}>
       <IntlProvider locale={locale.locale} key={locale} messages={locale.messages}>
         <ThemeProvider theme={theme}>
           <Head>
@@ -22,7 +24,7 @@ function App({ Component, pageProps }) {
           <Component style={{ height: "100%" }} {...pageProps} />
         </ThemeProvider>
       </IntlProvider>
-    </>
+    </Provider>
   );
 }
 

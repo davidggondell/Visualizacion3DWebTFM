@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState, useCallback, useRef } from "react";
-import { AppControlsContext } from "./AppControlsContext";
-import { TrapezeBox } from "./BaseComponents/TrapezeBox";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { TrapezeBox } from "../baseComponents/TrapezeBox";
 import { Box, IconButton, Slide, Slider, Stack, Typography } from "@mui/material";
-import { useWindowDimensions } from "../hooks/useWindowDimensions";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { useTheme } from "@emotion/react";
 import FastForwardRoundedIcon from "@mui/icons-material/FastForwardRounded";
 import FastRewindRoundedIcon from "@mui/icons-material/FastRewindRounded";
 import CloseIcon from "@mui/icons-material/Close";
 import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { getTimeControlsOpened } from "../selectors";
+import { closeTimeControls } from "../actions";
 
 const TimeSpeedNumber = ({ callBackRef }) => {
   const [value, setValue] = useState(0);
@@ -20,7 +22,8 @@ const TimeSpeedNumber = ({ callBackRef }) => {
 
 export const TimeControls = () => {
   const themeValues = useTheme();
-  const { timeControlsOpened, setTimeControlsOpened } = useContext(AppControlsContext);
+  const dispatch = useDispatch();
+  const timeControlsOpened = useSelector(getTimeControlsOpened);
   const [slideOpened, setSlideOpened] = useState(timeControlsOpened);
   const setSpeedValueCallBack = useRef(null);
   const { width } = useWindowDimensions(0.7);
@@ -31,7 +34,7 @@ export const TimeControls = () => {
 
   const onClose = useCallback(() => {
     setSlideOpened(false);
-    setTimeout(() => setTimeControlsOpened(false), 200);
+    setTimeout(() => closeTimeControls(dispatch), 200);
   }, []);
 
   return (

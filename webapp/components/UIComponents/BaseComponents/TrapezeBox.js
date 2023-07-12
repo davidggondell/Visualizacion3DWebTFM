@@ -1,7 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Children } from "react";
-import { themeValues } from "../../utils/themeValues";
 
 const Shape = ({ closed, ...props }) => {
   if (closed) {

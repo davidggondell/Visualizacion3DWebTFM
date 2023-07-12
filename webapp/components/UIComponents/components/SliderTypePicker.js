@@ -1,7 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { themeValues } from "../utils/themeValues";
+import { themeValues } from "../../utils/themeValues";
 
 export const sliderTypes = {
   disabled: "disabled",

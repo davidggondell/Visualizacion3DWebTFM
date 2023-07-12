@@ -11,18 +11,20 @@ import {
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
-import React, { useState, useEffect, useContext } from "react";
-import { themeValues } from "../utils/themeValues";
+import React, { useState, useEffect } from "react";
+import { themeValues } from "../../utils/themeValues";
 import { FrameCorners } from "@arwes/core";
-import { AppControlsContext } from "./AppControlsContext";
 import { useCallback } from "react";
-import { useWindowDimensions } from "../hooks/useWindowDimensions";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import Stack from "@mui/material/Stack";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import { FormattedMessage } from "react-intl";
 import { SliderTypePicker, sliderTypes } from "./SliderTypePicker";
+import { useDispatch, useSelector } from "react-redux";
+import { getFiltersModalOpened } from "../selectors";
+import { closeFiltersModal } from "../actions";
 
 const StarClassCheckBox = ({ value, onChange, starClass }) => {
   return (
@@ -75,7 +77,8 @@ const FiltersModalTitle = ({ onClose }) => {
 };
 
 export const FiltersModal = () => {
-  const { filtersModalOpened, setFiltersModalOpened } = useContext(AppControlsContext);
+  const dispatch = useDispatch();
+  const filtersModalOpened = useSelector(getFiltersModalOpened);
   const [activate, setActivate] = React.useState(filtersModalOpened);
   const [classOActivated, setClassOActivated] = useState(true);
   const [classBActivated, setClassBActivated] = useState(true);
@@ -97,7 +100,7 @@ export const FiltersModal = () => {
 
   const onClose = useCallback(() => {
     setActivate(false);
-    setTimeout(() => setFiltersModalOpened(false), 200);
+    setTimeout(() => closeFiltersModal(dispatch), 200);
   }, []);
 
   return (
@@ -214,8 +217,8 @@ export const FiltersModal = () => {
                       <Stack sx={{ width: "100%" }} alignItems="center">
                         <div style={{ width: "90%" }}>
                           <Slider
-                            value={temperatureSliderValue}
-                            onChange={(_, value) => setTemperatureSliderValue(value)}
+                            defaultValue={[15000, 25000]}
+                            onChangeCommitted={(_, value) => setTemperatureSliderValue(value)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={40000}
@@ -235,8 +238,8 @@ export const FiltersModal = () => {
                       <Stack sx={{ width: "100%" }} alignItems="center">
                         <div style={{ width: "90%" }}>
                           <Slider
-                            value={massSliderValue}
-                            onChange={(_, value) => setMassSliderValue(value)}
+                            defaultValue={[15, 35]}
+                            onChangeCommitted={(_, value) => setMassSliderValue(value)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={50}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { TrapezeBox } from "../baseComponents/TrapezeBox";
+import { TrapezeBox } from "../BaseComponents/TrapezeBox";
 import { Box, IconButton, Slide, Slider, Stack, Typography } from "@mui/material";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { useTheme } from "@emotion/react";

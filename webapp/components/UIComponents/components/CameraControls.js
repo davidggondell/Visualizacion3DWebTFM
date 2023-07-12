@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Box, IconButton, Slide, Stack, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import { TrapezeBox } from "../baseComponents/TrapezeBox";
+import { TrapezeBox } from "../BaseComponents/TrapezeBox";
 import AutoModeIcon from "@mui/icons-material/AutoMode";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { useTheme } from "@emotion/react";

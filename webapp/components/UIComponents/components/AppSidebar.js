@@ -1,10 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { TrapezeButton } from "../baseComponents/TrapezeButton";
-import { Triangle } from "../baseComponents/Triangle";
+import { TrapezeButton } from "../BaseComponents/TrapezeButton";
+import { Triangle } from "../BaseComponents/Triangle";
 import { themeValues } from "../../utils/themeValues";
-import { TrapezeBox } from "../baseComponents/TrapezeBox";
+import { TrapezeBox } from "../BaseComponents/TrapezeBox";
 import { Grid, Typography } from "@mui/material";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { GalaxyIcon } from "../../../icons/GalaxyIcon";

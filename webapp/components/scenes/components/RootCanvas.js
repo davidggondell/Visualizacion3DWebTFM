@@ -2,10 +2,10 @@ import { PerspectiveCamera, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useRef, useEffect } from "react";
 
-import { CameraController } from "../sceneObjects/CameraController";
-import { StarClusterScene } from "../scenes/StarClusterScene";
-import pleyades from "../../public/pleyades_edr3_ordered.json";
-import pesebre from "../../public/pesebre_edr3_ordered.json";
+import { CameraController } from "../../sceneObjects/CameraController";
+import { StarClusterScene } from "./StarClusterScene";
+import pleyades from "../../../public/pleyades_edr3_ordered.json";
+import pesebre from "../../../public/pesebre_edr3_ordered.json";
 
 export const RootCanvas = ({ cameraControllerRef }) => {
   const ambientLight = useRef(null);

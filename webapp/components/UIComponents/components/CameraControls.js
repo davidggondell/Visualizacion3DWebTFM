@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { getCameraControlsOpened } from "../selectors";
 import { closeCameraControls } from "../actions";
+import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
 //import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
 
 const FullWidthDiv = ({ fullWidth }) => {
@@ -45,9 +46,9 @@ export const CameraControls = () => {
 
   useEffect(() => {
     if (cameraType == cameraTypes.orbit) {
-      //setOrbitControls(dispatch);
+      setOrbitControls(dispatch);
     } else if (cameraType == cameraTypes.firstPerson) {
-      //setPlayerControls(dispatch);
+      setPlayerControls(dispatch);
     }
   }, [cameraType]);
 

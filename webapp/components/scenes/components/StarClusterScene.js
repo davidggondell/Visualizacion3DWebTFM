@@ -1,19 +1,14 @@
-import {
-  EffectComposer,
-  Select,
-  Selection,
-  SelectiveBloom,
-} from "@react-three/postprocessing";
+import { EffectComposer, Select, Selection, SelectiveBloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import React from "react";
-import { EstrellaAmarillaClara } from "../3DComponents/EstrellaAmarillaClara";
-import { EstrellaAzul } from "../3DComponents/EstrellaAzul";
-import { EstrellaAzulClara } from "../3DComponents/EstrellaAzulClara";
-import { EstrellaBlanca } from "../3DComponents/EstrellaBlanca";
-import { EstrellaNaranja } from "../3DComponents/EstrellaNaranja";
-import { EstrellaRoja } from "../3DComponents/EstrellaRoja";
-import { MiEstrella } from "../3DComponents/MiEstrella";
-import { calculateMassCenter } from "../utils/physicsFunctions";
+import { EstrellaAmarillaClara } from "../../3DComponents/EstrellaAmarillaClara";
+import { EstrellaAzul } from "../../3DComponents/EstrellaAzul";
+import { EstrellaAzulClara } from "../../3DComponents/EstrellaAzulClara";
+import { EstrellaBlanca } from "../../3DComponents/EstrellaBlanca";
+import { EstrellaNaranja } from "../../3DComponents/EstrellaNaranja";
+import { EstrellaRoja } from "../../3DComponents/EstrellaRoja";
+import { MiEstrella } from "../../3DComponents/MiEstrella";
+import { calculateMassCenter } from "../../utils/physicsFunctions";
 import { Stars } from "@react-three/drei";
 
 const blueStarMinTemp = 33000;
@@ -43,49 +38,19 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
             console.log(star);
           }
           if (starTemp > 12000) {
-            return (
-              <EstrellaAzul key={i} position={[x, y, z]} scale={star.Radius} />
-            );
+            return <EstrellaAzul key={i} position={[x, y, z]} scale={star.Radius} />;
           } else if (starTemp > brightBlueStarMinTemp) {
-            return (
-              <EstrellaAzulClara
-                key={i}
-                position={[x, y, z]}
-                scale={star.Radius}
-              />
-            );
+            return <EstrellaAzulClara key={i} position={[x, y, z]} scale={star.Radius} />;
           } else if (starTemp > whiteStarMinTemp) {
-            return (
-              <EstrellaBlanca
-                key={i}
-                position={[x, y, z]}
-                scale={star.Radius}
-              />
-            );
+            return <EstrellaBlanca key={i} position={[x, y, z]} scale={star.Radius} />;
           } else if (starTemp > brightYellowStarMinTemp) {
-            return (
-              <EstrellaAmarillaClara
-                key={i}
-                position={[x, y, z]}
-                scale={star.Radius}
-              />
-            );
+            return <EstrellaAmarillaClara key={i} position={[x, y, z]} scale={star.Radius} />;
           } else if (starTemp > yellowStarMinTemp) {
-            return (
-              <MiEstrella key={i} position={[x, y, z]} scale={star.Radius} />
-            );
+            return <MiEstrella key={i} position={[x, y, z]} scale={star.Radius} />;
           } else if (starTemp > orangeStarMinTemp) {
-            return (
-              <EstrellaNaranja
-                key={i}
-                position={[x, y, z]}
-                scale={star.Radius}
-              />
-            );
+            return <EstrellaNaranja key={i} position={[x, y, z]} scale={star.Radius} />;
           } else {
-            return (
-              <EstrellaRoja key={i} position={[x, y, z]} scale={star.Radius} />
-            );
+            return <EstrellaRoja key={i} position={[x, y, z]} scale={star.Radius} />;
           }
         })}
       </>

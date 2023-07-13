@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { RootCanvas } from "../components/scenes/RootCanvas";
+import { RootCanvas } from "../components/scenes/components/RootCanvas";
 import { AppControls } from "../components/UIComponents/components/AppControls";
 
 export default function Home() {

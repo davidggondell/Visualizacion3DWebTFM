@@ -1,28 +1,22 @@
 import { Physics } from "@react-three/cannon";
 import { OrbitControls } from "@react-three/drei";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React from "react";
 import { Player } from "./Player";
+import { useSelector } from "react-redux";
+import { getPlayerControlsEnabled } from "../scenes/selectors";
 
-export const CameraController = forwardRef((props, ref) => {
-  const [enabled, setEnabled] = useState(false);
-
-  useImperativeHandle(ref, () => ({
-    toogleControls: () => {
-      setEnabled(!enabled);
-    },
-  }));
+export const CameraController = ({ canvasRef }) => {
+  const enabled = useSelector(getPlayerControlsEnabled);
 
   return (
     <>
       {enabled ? (
         <Physics>
-          <Player canvasRef={props.canvasRef} enabled={enabled} />
+          <Player canvasRef={canvasRef} enabled={enabled} />
         </Physics>
       ) : (
         <OrbitControls />
       )}
     </>
   );
-});
-
-CameraController.displayName = "CameraController";
+};

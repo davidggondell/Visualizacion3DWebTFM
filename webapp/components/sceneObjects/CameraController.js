@@ -5,14 +5,14 @@ import { Player } from "./Player";
 import { useSelector } from "react-redux";
 import { getPlayerControlsEnabled } from "../scenes/selectors";
 
-export const CameraController = ({ canvasRef }) => {
+export const CameraController = () => {
   const enabled = useSelector(getPlayerControlsEnabled);
 
   return (
     <>
       {enabled ? (
         <Physics>
-          <Player canvasRef={canvasRef} enabled={enabled} />
+          <Player enabled={enabled} />
         </Physics>
       ) : (
         <OrbitControls />

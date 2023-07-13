@@ -6,6 +6,7 @@ import { CameraController } from "../../sceneObjects/CameraController";
 import { StarClusterScene } from "./StarClusterScene";
 import pleyades from "../../../public/pleyades_edr3_ordered.json";
 import pesebre from "../../../public/pesebre_edr3_ordered.json";
+import { RootCanvasContext } from "../RootCanvasContext";
 
 export const RootCanvas = ({ cameraControllerRef }) => {
   const ambientLight = useRef(null);
@@ -24,12 +25,18 @@ export const RootCanvas = ({ cameraControllerRef }) => {
   }, []);
 
   return (
-    <Canvas ref={canvasRef}>
-      <CameraController canvasRef={canvasRef} ref={cameraControllerRef} />
-      <ambientLight intensity={0.4} ref={ambientLight} />
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} far={100000} />
-      <Stats />
-      <StarClusterScene starCluster={pesebre} ambientLight={ambientLight} />
-    </Canvas>
+    <RootCanvasContext.Provider
+      value={{
+        canvasRef: canvasRef,
+      }}
+    >
+      <Canvas ref={canvasRef}>
+        <CameraController ref={cameraControllerRef} />
+        <ambientLight intensity={0.4} ref={ambientLight} />
+        <PerspectiveCamera makeDefault position={[0, 0, 5]} far={100000} />
+        <Stats />
+        <StarClusterScene starCluster={pesebre} ambientLight={ambientLight} />
+      </Canvas>
+    </RootCanvasContext.Provider>
   );
 };

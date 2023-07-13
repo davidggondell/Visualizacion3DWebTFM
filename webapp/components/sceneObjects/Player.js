@@ -1,19 +1,16 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import {
-  createUseGesture,
-  dragAction,
-  pinchAction,
-  wheelAction,
-} from "@use-gesture/react";
-import React, { useRef } from "react";
+import { createUseGesture, dragAction, pinchAction, wheelAction } from "@use-gesture/react";
+import React, { useRef, useContext } from "react";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
 import { useVariable } from "../hooks/useVariable";
 import { deg2rad } from "../utils/physicsFunctions";
+import { RootCanvasContext } from "../scenes/RootCanvasContext";
 
 const moveSpeed = 3;
 
-export const Player = ({ canvasRef, enabled }) => {
-  const { camera, scene } = useThree();
+export const Player = ({ enabled }) => {
+  const { camera } = useThree();
+  const { canvasRef } = useContext(RootCanvasContext);
   //wasd input
   const pressed = useKeyboardInput(["w", "a", "s", "d", "c", " "]);
   //Converting wasd input to a ref
@@ -26,10 +23,10 @@ export const Player = ({ canvasRef, enabled }) => {
   const useGesture = createUseGesture([dragAction, pinchAction, wheelAction]);
   useGesture(
     {
-      onDrag: ({ down, pinching, cancel, offset: [x, y], ...rest }) => {
+      onDrag: ({ down, pinching, cancel, offset: [x, y] }) => {
         if (enabled) {
           if (pinching) return cancel();
-          dragInput.current = { down: down, x: x, y: y };
+          dragInput.current = { down: down, x: x * 0.55, y: y * 0.55 };
         }
       },
       onPinch: ({ first, da: [distance, _] }) => {
@@ -40,7 +37,7 @@ export const Player = ({ canvasRef, enabled }) => {
           pinchInput.current = distance;
         }
       },
-      onWheel: ({ active, event, direction: [, dy] }) => {
+      onWheel: ({ active, direction: [, dy] }) => {
         if (enabled) {
           if (active) {
             camera.translateZ(15 * dy);
@@ -51,7 +48,7 @@ export const Player = ({ canvasRef, enabled }) => {
     {
       target: canvasRef,
       eventOptions: { passive: false },
-    }
+    },
   );
 
   //check camera movement on each frame

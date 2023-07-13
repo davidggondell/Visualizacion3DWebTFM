@@ -1,15 +1,9 @@
 import { EffectComposer, Select, Selection, SelectiveBloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import React from "react";
-import { EstrellaAmarillaClara } from "../../3DComponents/EstrellaAmarillaClara";
-import { EstrellaAzul } from "../../3DComponents/EstrellaAzul";
-import { EstrellaAzulClara } from "../../3DComponents/EstrellaAzulClara";
-import { EstrellaBlanca } from "../../3DComponents/EstrellaBlanca";
-import { EstrellaNaranja } from "../../3DComponents/EstrellaNaranja";
-import { EstrellaRoja } from "../../3DComponents/EstrellaRoja";
-import { MiEstrella } from "../../3DComponents/MiEstrella";
 import { calculateMassCenter } from "../../utils/physicsFunctions";
 import { Stars } from "@react-three/drei";
+import { StarModel } from "./3DModels/StarModel";
 
 const blueStarMinTemp = 33000;
 const brightBlueStarMinTemp = 10000;
@@ -34,24 +28,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
           const z = (star.z - massCenter.z) * 200;
           const starTemp = 10 ** star.temp_i;
 
-          if (star.Radius > 8) {
-            console.log(star);
-          }
-          if (starTemp > 12000) {
-            return <EstrellaAzul key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else if (starTemp > brightBlueStarMinTemp) {
-            return <EstrellaAzulClara key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else if (starTemp > whiteStarMinTemp) {
-            return <EstrellaBlanca key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else if (starTemp > brightYellowStarMinTemp) {
-            return <EstrellaAmarillaClara key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else if (starTemp > yellowStarMinTemp) {
-            return <MiEstrella key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else if (starTemp > orangeStarMinTemp) {
-            return <EstrellaNaranja key={i} position={[x, y, z]} scale={star.Radius} />;
-          } else {
-            return <EstrellaRoja key={i} position={[x, y, z]} scale={star.Radius} />;
-          }
+          return <StarModel key={i} position={[x, y, z]} scale={star.Radius} temperature={starTemp} />;
         })}
       </>
     );
@@ -77,7 +54,7 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
             opacity={1}
           />
           <Select enabled={true}>
-            <MiEstrella key={1} position={[0, 0, 0]} scale={1} />
+            <StarModel key={1} position={[0, 0, 0]} scale={1} temperature={solarTemp} />
             {createStars(starCluster)}
           </Select>
         </EffectComposer>

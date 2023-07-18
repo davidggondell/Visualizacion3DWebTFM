@@ -49,3 +49,11 @@ export const openCameraControls = (dispatch) => {
 export const closeCameraControls = (dispatch) => {
   dispatch(setCameraControlsOpened(false));
 };
+
+export const closeAllControls = (dispatch) => {
+  batch(() => {
+    dispatch(setFiltersModalOpened(false));
+    dispatch(setTimeControlsOpened(false));
+    dispatch(setCameraControlsOpened(false));
+  });
+};

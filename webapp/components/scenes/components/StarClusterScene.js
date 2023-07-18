@@ -1,38 +1,44 @@
 import { EffectComposer, Select, Selection, SelectiveBloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
-import React from "react";
+import React, { memo, useRef, useEffect } from "react";
 import { calculateMassCenter } from "../../utils/physicsFunctions";
 import { Stars } from "@react-three/drei";
 import { StarModel } from "./3DModels/StarModel";
+import { useSelector } from "react-redux";
+import { getStarZoom } from "../selectors";
 
-const blueStarMinTemp = 33000;
-const brightBlueStarMinTemp = 10000;
-const whiteStarMinTemp = 7500;
-const brightYellowStarMinTemp = 6000;
-const yellowStarMinTemp = 5200;
-const orangeStarMinTemp = 3700;
 //Suns temperature in Kelvin
 const solarTemp = 5778;
 const solarLum = 3.828 * 10 ** 26;
 const boltz = 5.67037 * 10 ** -8;
 
-export const StarClusterScene = ({ starCluster, ambientLight }) => {
-  //Returns the list of star 3D models of a star cluster
-  const createStars = (starCluster) => {
-    const massCenter = calculateMassCenter(starCluster);
-    return (
-      <>
-        {starCluster.map((star, i) => {
-          const x = (star.x - massCenter.x) * 200;
-          const y = (star.y - massCenter.y) * 200;
-          const z = (star.z - massCenter.z) * 200;
-          const starTemp = 10 ** star.temp_i;
+const CreateStars = memo(({ starCluster, canClickRef }) => {
+  const massCenter = calculateMassCenter(starCluster);
+  return (
+    <>
+      {starCluster.map((star, i) => {
+        const x = (star.x - massCenter.x) * 200;
+        const y = (star.y - massCenter.y) * 200;
+        const z = (star.z - massCenter.z) * 200;
+        const starTemp = 10 ** star.temp_i;
+        console.log(star);
+        return (
+          <StarModel
+            key={i}
+            position={[x, y, z]}
+            scale={star.Radius}
+            temperature={starTemp}
+            starId={star.ID}
+            mass={star.mass_i}
+            canClickRef={canClickRef}
+          />
+        );
+      })}
+    </>
+  );
+});
 
-          return <StarModel key={i} position={[x, y, z]} scale={star.Radius} temperature={starTemp} />;
-        })}
-      </>
-    );
-  };
+const Composition = memo(({ starCluster, ambientLight, canClickRef }) => {
   return (
     <>
       <Selection>
@@ -54,12 +60,31 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
             opacity={1}
           />
           <Select enabled={true}>
-            <StarModel key={1} position={[0, 0, 0]} scale={1} temperature={solarTemp} />
-            {createStars(starCluster)}
+            <StarModel
+              key={1}
+              position={[0, 0, 0]}
+              scale={1}
+              temperature={solarTemp}
+              canClickRef={canClickRef}
+              starId={1}
+              mass={1}
+            />
+            <CreateStars starCluster={starCluster} canClickRef={canClickRef} />
           </Select>
         </EffectComposer>
       </Selection>
       {/* <Stars radius={10000} depth={5} count={1000} /> */}
     </>
   );
+});
+
+export const StarClusterScene = ({ starCluster, ambientLight }) => {
+  const starZoom = useSelector(getStarZoom);
+  const canClickRef = useRef(null);
+
+  useEffect(() => {
+    canClickRef.current = starZoom == null;
+  }, [starZoom]);
+
+  return <Composition starCluster={starCluster} ambientLight={ambientLight} canClickRef={canClickRef} />;
 };

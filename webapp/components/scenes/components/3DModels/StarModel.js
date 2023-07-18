@@ -1,20 +1,24 @@
 import React, { useRef, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { getStarSize } from "../../../utils/physicsFunctions";
+import { useFrame, useThree } from "@react-three/fiber";
+import {
+  blueStarMinTemp,
+  brightBlueStarMinTemp,
+  brightYellowStarMinTemp,
+  getStarSize,
+  orangeStarMinTemp,
+  whiteStarMinTemp,
+  yellowStarMinTemp,
+} from "../../../utils/physicsFunctions";
 import { setNewStarZoom } from "../../actions";
 import { useDispatch } from "react-redux";
+import * as THREE from "three";
 
-const blueStarMinTemp = 12000;
-const brightBlueStarMinTemp = 10000;
-const whiteStarMinTemp = 7500;
-const brightYellowStarMinTemp = 6000;
-const yellowStarMinTemp = 5200;
-const orangeStarMinTemp = 3700;
-
-export const StarModel = ({ position, scale, temperature }) => {
+export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef }) => {
+  const { camera } = useThree();
   const dispatch = useDispatch();
   const startRotation = Math.random() * Math.PI;
+  const starSize = getStarSize(scale);
   const starRef = useRef();
   const sol = useGLTF("/MiEstrella.gltf");
   const roja = useGLTF("/EstrellaRoja.gltf");
@@ -91,10 +95,10 @@ export const StarModel = ({ position, scale, temperature }) => {
         toneMapped: true,
       };
     }
-  }, [temperature, sol, roja, naranja, blanca, azulClara, azul, amarillaClara]);
+  }, []);
 
   useFrame(({ clock }) => {
-    starRef.current.rotation.y = startRotation + clock.getElapsedTime() / 6;
+    starRef.current.rotation.y = startRotation + clock.getElapsedTime() / 4;
   });
 
   return (
@@ -106,9 +110,28 @@ export const StarModel = ({ position, scale, temperature }) => {
         material-emissive={starModelValues.emissive}
         material-emissiveIntensity={starModelValues.emissiveIntensity}
         material-toneMapped={starModelValues.toneMapped}
-        scale={getStarSize(scale)}
-        onClick={() => {
-          setNewStarZoom(dispatch, position);
+        scale={starSize}
+        onClick={(event) => {
+          if (canClickRef?.current) {
+            event.stopPropagation();
+            var cameraPosition = camera.position;
+            var rotation = camera.rotation.clone();
+            var direction = new THREE.Vector3(0, 0, -1);
+            direction.applyEuler(rotation);
+            var coordinates = cameraPosition.clone().add(direction);
+            console.log(starId);
+            setNewStarZoom(dispatch, {
+              position: position,
+              cameraPosition: cameraPosition.toArray(),
+              pointAhead: coordinates.toArray(),
+              modelSize: starSize,
+              starSize: scale,
+              starId: starId,
+              mass: mass,
+              temperature: temperature,
+              obsolete: false,
+            });
+          }
         }}
       />
     </group>

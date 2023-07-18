@@ -1,3 +1,4 @@
+import { closeAllControls } from "../UIComponents/actions";
 import { setPlayerControlsEnabled, setStarZoom } from "./canvasReducer";
 
 export const setPlayerControls = (dispatch) => {
@@ -9,6 +10,7 @@ export const setOrbitControls = (dispatch) => {
 };
 
 export const setNewStarZoom = (dispatch, starZoom) => {
+  closeAllControls(dispatch);
   dispatch(setStarZoom(starZoom));
 };
 

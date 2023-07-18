@@ -48,4 +48,14 @@ export default {
 
   "cameraControls.orbit": "Órbita",
   "cameraControls.firstPerson": "Primera persona",
+
+  "starDetails.id": "ID: {starId}",
+  "starDetails.stellarClass": "Clase estelar: {stellarClass}",
+  "starDetails.coordinates": "Coordenadas:",
+  "starDetails.coordinates.x": "X: {coord}",
+  "starDetails.coordinates.y": "Y: {coord}",
+  "starDetails.coordinates.z": "Z: {coord}",
+  "starDetails.mass": "Masa: {mass} M☉",
+  "starDetails.radius": "Radio {radius} R☉",
+  "starDetails.temperature": "Temperatura: {temperature} K",
 };

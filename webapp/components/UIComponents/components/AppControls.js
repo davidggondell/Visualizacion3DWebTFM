@@ -6,8 +6,9 @@ import NoSSR from "react-no-ssr";
 import { AnimatorGeneralProvider } from "@arwes/animation";
 import { TimeControls } from "./TimeControls";
 import { CameraControls } from "./CameraControls";
+import { StarDetails } from "./StarDetails";
 
-const animatorGeneral = { duration: { enter: 150, exit: 150 } };
+const animatorGeneral = { duration: { enter: 200, exit: 200 } };
 export const AppControls = () => {
   return (
     <>
@@ -17,6 +18,7 @@ export const AppControls = () => {
           <StylesBaseline />
           <NoSSR>
             <FiltersModal />
+            <StarDetails />
           </NoSSR>
         </AnimatorGeneralProvider>
       </ArwesThemeProvider>

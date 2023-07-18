@@ -1,3 +1,10 @@
+export const blueStarMinTemp = 12000;
+export const brightBlueStarMinTemp = 10000;
+export const whiteStarMinTemp = 7500;
+export const brightYellowStarMinTemp = 6000;
+export const yellowStarMinTemp = 5200;
+export const orangeStarMinTemp = 3700;
+
 export const deg2rad = (degrees) => degrees * (Math.PI / 180);
 
 export const getStarSize = (radius) => {
@@ -6,6 +13,26 @@ export const getStarSize = (radius) => {
     adjustedRadius = 4 + 3 * Math.log10(radius - 3) * Math.log10(10, radius);
   }
   return 1.5 * adjustedRadius;
+};
+
+export const getStarClass = (temperature) => {
+  if (temperature > blueStarMinTemp) {
+    return "O";
+  } else if (temperature > brightBlueStarMinTemp) {
+    return "B";
+  } else if (temperature > whiteStarMinTemp) {
+    return "A";
+  } else if (temperature > brightYellowStarMinTemp) {
+    return "F";
+  } else if (temperature > yellowStarMinTemp) {
+    return "G";
+  } else if (temperature > orangeStarMinTemp) {
+    return "K";
+  } else if (temperature > 0) {
+    return "M";
+  } else {
+    return "";
+  }
 };
 
 export const calculateMassCenter = (starCluster) => {

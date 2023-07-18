@@ -8,15 +8,16 @@ import { TrapezeBox } from "../BaseComponents/TrapezeBox";
 import { Grid, Typography } from "@mui/material";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { GalaxyIcon } from "../../../icons/GalaxyIcon";
-import { TimeIcon } from "../../../icons/TimeIcon";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { CameraIcon } from "../../../icons/CameraIcon";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { AstronautIcon } from "../../../icons/AstronautIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { getCameraControlsOpened, getFiltersModalOpened, getSidebarOpened } from "../selectors";
+import { getFiltersModalOpened, getSidebarOpened } from "../selectors";
 import { closeSidebar, openCameraControls, openFiltersModal, openSidebar, openTimeControls } from "../actions";
 import Slide from "@mui/material/Slide";
 import { FormattedMessage } from "react-intl";
+import { getStarZoom } from "../../scenes/selectors";
 
 const GridItem = ({ children, ...props }) => {
   return (
@@ -58,6 +59,7 @@ const drawerBleeding = 40;
 export const AppSidebar = () => {
   const open = useSelector(getSidebarOpened);
   const filtersModalOpened = useSelector(getFiltersModalOpened);
+  const starZoom = useSelector(getStarZoom);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions(0.7);
 
@@ -92,7 +94,7 @@ export const AppSidebar = () => {
           closed={false}
           shadow
         >
-          <Slide direction="left" in={!filtersModalOpened}>
+          <Slide direction="left" in={!filtersModalOpened && !starZoom}>
             <Box
               sx={{
                 display: "flex",
@@ -155,7 +157,7 @@ export const AppSidebar = () => {
                 openTimeControls(dispatch);
               }}
             >
-              <TimeIcon width={30} height={30} fill={themeValues.palette.primary.main} />
+              <AccessTimeIcon sx={{ fontSize: 34, color: themeValues.palette.primary.main }} />
               <Typography fontSize={16}>
                 <FormattedMessage id="sidebar.timeControls" />
               </Typography>
@@ -167,7 +169,7 @@ export const AppSidebar = () => {
                 openFiltersModal(dispatch);
               }}
             >
-              <FilterAltOutlinedIcon sx={{ width: 34, height: 34, color: themeValues.palette.primary.main }} />
+              <FilterAltOutlinedIcon sx={{ fontSize: 34, color: themeValues.palette.primary.main }} />
               <Typography fontSize={16}>
                 <FormattedMessage id="sidebar.starFilters" />
               </Typography>

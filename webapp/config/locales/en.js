@@ -1,4 +1,7 @@
 export default {
+  "clusters.pesebre": "Pesebre",
+  "clusters.pleyades": "Pleyades",
+
   "general.from": "From",
   "general.to": "To",
 
@@ -58,4 +61,21 @@ export default {
   "starDetails.mass": "Mass: {mass} M☉",
   "starDetails.radius": "Radius {radius} R☉",
   "starDetails.temperature": "Temperature: {temperature} K",
+
+  "myClusters.uploadFile": "Upload CSV",
+  "myClusters.uploadFile.invalidType": "Uploaded file is not a CSV file",
+  "myClusters.uploadFile.success": "File uploaded correctly",
+  "myClusters.delete.title": "Delete cluster",
+  "myClusters.delete.description": "Are you sure you want to delete the cluster {name}?",
+  "myClusters.delete.confirm": "Yes, delete",
+  "myClusters.delete.cancel": "Cancel",
+  "myClusters.delete.success": "Cluster removed",
+  "myClusters.delete.error": "Error removing cluster from browser's storage",
+  "myClusters.readFile.success": "Cluster added correctly",
+  "myClusters.readFile.error": "There was an error saving the file",
+  "myClusters.readFile.quotaExceded": "Browser's local storage size exceeded",
+  "myClusters.noFiles": "There are no files saved yet",
+  "myClusters.play.errorDecompressing": "Error descompressing file",
+  "myClusters.play.errorParsing": "Error parsing file",
+  "myClusters.play.errorValidating": "CSV file does not have necessary field or there are some incorrect",
 };

@@ -36,8 +36,8 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: material,
-        emissive: "white",
-        emissiveIntensity: 2,
+        emissive: "cyan",
+        emissiveIntensity: 1.5,
         toneMapped: true,
       };
     } else if (temperature > brightBlueStarMinTemp) {
@@ -45,8 +45,8 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
-        emissive: "white",
-        emissiveIntensity: 0.5,
+        emissive: "cyan",
+        emissiveIntensity: 0.3,
         toneMapped: true,
       };
     } else if (temperature > whiteStarMinTemp) {
@@ -54,7 +54,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
-        emissive: "white",
+        emissive: "cyan",
         emissiveIntensity: 0.2,
         toneMapped: false,
       };
@@ -90,8 +90,8 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
-        emissive: "white",
-        emissiveIntensity: 4,
+        emissive: "red",
+        emissiveIntensity: 3.5,
         toneMapped: true,
       };
     }
@@ -119,7 +119,6 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
             var direction = new THREE.Vector3(0, 0, -1);
             direction.applyEuler(rotation);
             var coordinates = cameraPosition.clone().add(direction);
-            console.log(starId);
             setNewStarZoom(dispatch, {
               position: position,
               cameraPosition: cameraPosition.toArray(),

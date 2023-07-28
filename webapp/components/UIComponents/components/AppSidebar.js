@@ -18,6 +18,7 @@ import { closeSidebar, openCameraControls, openFiltersModal, openSidebar, openTi
 import Slide from "@mui/material/Slide";
 import { FormattedMessage } from "react-intl";
 import { getStarZoom } from "../../scenes/selectors";
+import { useRouter } from "next/router";
 
 const GridItem = ({ children, ...props }) => {
   return (
@@ -57,6 +58,7 @@ const BoxCustomDivider = () => (
 
 const drawerBleeding = 40;
 export const AppSidebar = () => {
+  const router = useRouter();
   const open = useSelector(getSidebarOpened);
   const filtersModalOpened = useSelector(getFiltersModalOpened);
   const starZoom = useSelector(getStarZoom);
@@ -131,6 +133,7 @@ export const AppSidebar = () => {
             <GridItem
               onClick={() => {
                 closeSidebar(dispatch);
+                router.push("/");
               }}
             >
               <GalaxyIcon width={34} height={34} fill={themeValues.palette.primary.main} />
@@ -178,6 +181,7 @@ export const AppSidebar = () => {
             <GridItem
               onClick={() => {
                 closeSidebar(dispatch);
+                router.push("/myClusters");
               }}
             >
               <AstronautIcon width={30} height={30} fill={themeValues.palette.primary.main} />

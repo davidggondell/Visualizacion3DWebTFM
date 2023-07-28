@@ -13,7 +13,7 @@ const starDetailsWidth = 320;
 
 export const StarDetailsCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
   const theme = createTheme(themeValues);
-  console.log(position, position[0], position[1]);
+  position, position[0], position[1];
   return (
     <Card
       animator={{ activate }}
@@ -84,8 +84,6 @@ export const StarDetails = () => {
   const [activate, setActivate] = useState(!!starZoom);
   const theme = useTheme();
   const closeRef = useRef(null);
-
-  console.log(starZoom);
 
   useEffect(() => {
     starZoomRef.current = !!starZoom;

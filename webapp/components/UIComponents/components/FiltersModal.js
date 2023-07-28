@@ -25,6 +25,8 @@ import { SliderTypePicker, sliderTypes } from "./SliderTypePicker";
 import { useDispatch, useSelector } from "react-redux";
 import { getFiltersModalOpened } from "../selectors";
 import { closeFiltersModal } from "../actions";
+import { setNewClusterFilters } from "../../scenes/actions";
+import { getClusterFilters } from "../../scenes/selectors";
 
 const StarClassCheckBox = ({ value, onChange, starClass }) => {
   return (
@@ -141,7 +143,7 @@ export const FiltersModal = () => {
                           <Stack spacing={2} alignItems="flex-start">
                             <FormControlLabel
                               value={classOActivated}
-                              onChange={(value) => setClassOActivated(value)}
+                              onChange={(event) => setClassOActivated(event.target.checked)}
                               control={<Checkbox defaultChecked />}
                               label={
                                 <Stack direction="row" spacing={1}>
@@ -160,17 +162,17 @@ export const FiltersModal = () => {
                             />
                             <StarClassCheckBox
                               value={classAActivated}
-                              onChange={(value) => setClassAActivated(value)}
+                              onChange={(event) => setClassAActivated(event.target.checked)}
                               starClass="A"
                             />
                             <StarClassCheckBox
                               value={classGActivated}
-                              onChange={(value) => setClassGActivated(value)}
+                              onChange={(event) => setClassGActivated(event.target.checked)}
                               starClass="G"
                             />
                             <FormControlLabel
                               value={classMActivated}
-                              onChange={(value) => setClassMActivated(value)}
+                              onChange={(event) => setClassMActivated(event.target.checked)}
                               control={<Checkbox defaultChecked />}
                               label={
                                 <Stack direction="row" spacing={1}>
@@ -191,17 +193,17 @@ export const FiltersModal = () => {
                           <Stack spacing={2} justifyContent="flex-start">
                             <StarClassCheckBox
                               value={classBActivated}
-                              onChange={(value) => setClassBActivated(value)}
+                              onChange={(event) => setClassBActivated(event.target.checked)}
                               starClass="B"
                             />
                             <StarClassCheckBox
                               value={classFActivated}
-                              onChange={(value) => setClassFActivated(value)}
+                              onChange={(event) => setClassFActivated(event.target.checked)}
                               starClass="F"
                             />
                             <StarClassCheckBox
                               value={classKActivated}
-                              onChange={(value) => setClassKActivated(value)}
+                              onChange={(event) => setClassKActivated(event.target.checked)}
                               starClass="K"
                             />
                           </Stack>
@@ -251,10 +253,45 @@ export const FiltersModal = () => {
                       </Stack>
                       <Divider />
                       <Stack direction="row" justifyContent="space-between">
-                        <Button color="secondary" variant="outlined">
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          onClick={() => {
+                            setNewClusterFilters(dispatch, null);
+                            setClassOActivated(true);
+                            setClassBActivated(true);
+                            setClassAActivated(true);
+                            setClassFActivated(true);
+                            setClassGActivated(true);
+                            setClassKActivated(true);
+                            setClassMActivated(true);
+                            setTemperatureSliderType(sliderTypes.disabled);
+                            setTemperatureSliderValue([0, 10]);
+                            setMassSliderType(sliderTypes.disabled);
+                            setMassSliderValue([0, 10]);
+                          }}
+                        >
                           <FormattedMessage id="filtersModal.reset" />
                         </Button>
-                        <Button variant="outlined">
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            setNewClusterFilters(dispatch, {
+                              classOActivated: classOActivated,
+                              classBActivated: classBActivated,
+                              classAActivated: classAActivated,
+                              classFActivated: classFActivated,
+                              classGActivated: classGActivated,
+                              classKActivated: classKActivated,
+                              classMActivated: classMActivated,
+                              temperatureFilterType: temperatureSliderType,
+                              temperatureFilterValue: temperatureSliderValue,
+                              massFilterType: massSliderType,
+                              massFilterValue: massSliderValue,
+                            });
+                            onClose();
+                          }}
+                        >
                           <FormattedMessage id="filtersModal.accept" />
                         </Button>
                       </Stack>

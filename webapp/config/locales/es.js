@@ -1,4 +1,7 @@
 export default {
+  "clusters.pesebre": "Pesebre",
+  "clusters.pleyades": "Pleyades",
+
   "general.from": "Desde",
   "general.to": "Hasta",
 
@@ -58,4 +61,21 @@ export default {
   "starDetails.mass": "Masa: {mass} M☉",
   "starDetails.radius": "Radio {radius} R☉",
   "starDetails.temperature": "Temperatura: {temperature} K",
+
+  "myClusters.uploadFile": "Subir fichero CSV",
+  "myClusters.uploadFile.invalidType": "El fichero no es un fichero CSV",
+  "myClusters.uploadFile.success": "Fichero añadido correctamente",
+  "myClusters.delete.title": "Borrar cúmulo",
+  "myClusters.delete.description": "Esta seguro de que quiere borrar el cúmulo {name}?",
+  "myClusters.delete.confirm": "Si, borrar",
+  "myClusters.delete.cancel": "Cancelar",
+  "myClusters.delete.success": "Cúmulo borrado correctamente",
+  "myClusters.delete.error": "Error borrando el cúmulo del almacenamiento del navegador",
+  "myClusters.readFile.success": "Se ha añadido el cúmulo correctamente",
+  "myClusters.readFile.error": "Se ha producido un error al guardar el fichero",
+  "myClusters.readFile.quotaExceded": "Se ha excedido el almacenamiento máximo del navegador",
+  "myClusters.noFiles": "Aún no hay ficheros guardados",
+  "myClusters.play.errorDecompressing": "Error descomprimiendo el fichero",
+  "myClusters.play.errorParsing": "Error parseando el fichero",
+  "myClusters.play.errorValidating": "El fichero CSV no tiene los campos necesarios o hay alguno incorrecto",
 };

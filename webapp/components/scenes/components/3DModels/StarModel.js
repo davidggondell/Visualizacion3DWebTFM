@@ -14,7 +14,7 @@ import { setNewStarZoom } from "../../actions";
 import { useDispatch } from "react-redux";
 import * as THREE from "three";
 
-export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef }) => {
+export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef, isDraggingRef }) => {
   const { camera } = useThree();
   const dispatch = useDispatch();
   const startRotation = Math.random() * Math.PI;
@@ -112,7 +112,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         material-toneMapped={starModelValues.toneMapped}
         scale={starSize}
         onClick={(event) => {
-          if (canClickRef?.current) {
+          if (canClickRef?.current && !isDraggingRef.current) {
             event.stopPropagation();
             var cameraPosition = camera.position;
             var rotation = camera.rotation.clone();

@@ -1,8 +1,7 @@
-import { EffectComposer, Select, Selection, SelectiveBloom, Bloom } from "@react-three/postprocessing";
+import { EffectComposer, Selection, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import React, { memo, useRef, useEffect } from "react";
 import { calculateMassCenter } from "../../utils/physicsFunctions";
-import { Stars } from "@react-three/drei";
 import { StarModel } from "./3DModels/StarModel";
 import { useSelector } from "react-redux";
 import { getStarZoom } from "../selectors";
@@ -12,7 +11,7 @@ const solarTemp = 5778;
 const solarLum = 3.828 * 10 ** 26;
 const boltz = 5.67037 * 10 ** -8;
 
-const CreateStars = memo(({ starCluster, canClickRef }) => {
+const CreateStars = memo(({ starCluster, canClickRef, isDraggingRef }) => {
   const massCenter = calculateMassCenter(starCluster);
   return (
     <>
@@ -31,6 +30,7 @@ const CreateStars = memo(({ starCluster, canClickRef }) => {
             starId={star.ID}
             mass={star.mass_i}
             canClickRef={canClickRef}
+            isDraggingRef={isDraggingRef}
           />
         );
       })}
@@ -38,22 +38,32 @@ const CreateStars = memo(({ starCluster, canClickRef }) => {
   );
 });
 
-const Composition = memo(({ starCluster, ambientLight, canClickRef }) => {
+const Composition = memo(({ starCluster, canClickRef }) => {
+  const mDown = useRef(false);
+  const dragging = useRef(false);
+
+  useEffect(() => {
+    const mouseDown = () => {
+      mDown.current = true;
+      dragging.current = false;
+    };
+    const mouseMove = () => {
+      if (mDown.current) {
+        dragging.current = true;
+      }
+    };
+    window.addEventListener("mousedown", mouseDown);
+    window.addEventListener("mousemove", mouseMove);
+    return () => {
+      document.removeEventListener("mousedown", mouseDown);
+      document.removeEventListener("mousemove", mouseMove);
+    };
+  }, []);
+
   return (
     <>
       <Selection>
         <EffectComposer disableNormalPass={true}>
-          {/* <SelectiveBloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.5} intensity={0.4} />
-          <SelectiveBloom
-            luminanceThreshold={0}
-            luminanceSmoothing={0.5}
-            intensity={1}
-            kernelSize={KernelSize.VERY_SMALL}
-            height={300}
-            opacity={1}
-          />
-          */}
-          {/* <Select enabled={true}> */}
           <Bloom mipmapBlur luminanceThreshold={0} luminanceSmoothing={0.5} intensity={0.4} />
           <Bloom
             luminanceThreshold={0}
@@ -69,19 +79,18 @@ const Composition = memo(({ starCluster, ambientLight, canClickRef }) => {
             scale={1}
             temperature={solarTemp}
             canClickRef={canClickRef}
+            isDraggingRef={dragging}
             starId={1}
             mass={1}
           />
-          <CreateStars starCluster={starCluster} canClickRef={canClickRef} />
-          {/* //</Select> */}
+          <CreateStars starCluster={starCluster} canClickRef={canClickRef} isDraggingRef={dragging} />
         </EffectComposer>
       </Selection>
-      {/* <Stars radius={10000} depth={5} count={1000} /> */}
     </>
   );
 });
 
-export const StarClusterScene = ({ starCluster, ambientLight }) => {
+export const StarClusterScene = ({ starCluster }) => {
   const starZoom = useSelector(getStarZoom);
   const canClickRef = useRef(null);
 
@@ -89,5 +98,5 @@ export const StarClusterScene = ({ starCluster, ambientLight }) => {
     canClickRef.current = starZoom == null;
   }, [starZoom]);
 
-  return <Composition starCluster={starCluster} ambientLight={ambientLight} canClickRef={canClickRef} />;
+  return <Composition starCluster={starCluster} canClickRef={canClickRef} />;
 };

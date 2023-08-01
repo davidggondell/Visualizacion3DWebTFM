@@ -122,7 +122,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
         <ambientLight intensity={0.4} ref={ambientLight} />
         <PerspectiveCamera makeDefault position={[0, 0, 5]} far={100000} />
         <Stats />
-        <StarClusterScene starCluster={clusterToShow} ambientLight={ambientLight} />
+        <StarClusterScene starCluster={clusterToShow} />
       </Canvas>
     </RootCanvasContext.Provider>
   );

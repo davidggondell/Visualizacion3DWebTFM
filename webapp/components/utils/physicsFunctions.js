@@ -5,6 +5,16 @@ export const brightYellowStarMinTemp = 6000;
 export const yellowStarMinTemp = 5200;
 export const orangeStarMinTemp = 3700;
 
+export const starClasses = {
+  O: "O",
+  B: "B",
+  A: "A",
+  F: "F",
+  G: "G",
+  K: "K",
+  M: "M",
+};
+
 export const deg2rad = (degrees) => degrees * (Math.PI / 180);
 
 export const getStarSize = (radius) => {
@@ -17,19 +27,19 @@ export const getStarSize = (radius) => {
 
 export const getStarClass = (temperature) => {
   if (temperature > blueStarMinTemp) {
-    return "O";
+    return starClasses.O;
   } else if (temperature > brightBlueStarMinTemp) {
-    return "B";
+    return starClasses.B;
   } else if (temperature > whiteStarMinTemp) {
-    return "A";
+    return starClasses.A;
   } else if (temperature > brightYellowStarMinTemp) {
-    return "F";
+    return starClasses.F;
   } else if (temperature > yellowStarMinTemp) {
-    return "G";
+    return starClasses.G;
   } else if (temperature > orangeStarMinTemp) {
-    return "K";
+    return starClasses.K;
   } else if (temperature > 0) {
-    return "M";
+    return starClasses.M;
   } else {
     return "";
   }

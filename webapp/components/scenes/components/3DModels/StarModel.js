@@ -1,18 +1,11 @@
 import React, { useRef, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import {
-  blueStarMinTemp,
-  brightBlueStarMinTemp,
-  brightYellowStarMinTemp,
-  getStarSize,
-  orangeStarMinTemp,
-  whiteStarMinTemp,
-  yellowStarMinTemp,
-} from "../../../utils/physicsFunctions";
+import { getStarClass, getStarSize, starClasses } from "../../../utils/physicsFunctions";
 import { setNewStarZoom } from "../../actions";
 import { useDispatch } from "react-redux";
 import * as THREE from "three";
+import { useEffect } from "react";
 
 export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef, isDraggingRef }) => {
   const { camera } = useThree();
@@ -28,8 +21,10 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
   const azul = useGLTF("/EstrellaAzul.gltf");
   const amarillaClara = useGLTF("/EstrellaAmarillaClara.gltf");
 
+  useEffect(() => {}, [starRef]);
+
   const starModelValues = useMemo(() => {
-    if (temperature > blueStarMinTemp) {
+    if (getStarClass(temperature) == starClasses.O) {
       const { nodes, materials } = azul;
       var material = materials.MaterialBaked;
       material.toneMapped = false;
@@ -40,7 +35,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         emissiveIntensity: 1.5,
         toneMapped: true,
       };
-    } else if (temperature > brightBlueStarMinTemp) {
+    } else if (getStarClass(temperature) == starClasses.B) {
       const { nodes, materials } = azulClara;
       return {
         geometry: nodes.EsferaBaked.geometry,
@@ -49,7 +44,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         emissiveIntensity: 0.3,
         toneMapped: true,
       };
-    } else if (temperature > whiteStarMinTemp) {
+    } else if (getStarClass(temperature) == starClasses.A) {
       const { nodes, materials } = blanca;
       return {
         geometry: nodes.EsferaBaked.geometry,
@@ -58,7 +53,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         emissiveIntensity: 0.2,
         toneMapped: false,
       };
-    } else if (temperature > brightYellowStarMinTemp) {
+    } else if (getStarClass(temperature) == starClasses.F) {
       const { nodes, materials } = amarillaClara;
       return {
         geometry: nodes.EsferaBaked.geometry,
@@ -67,7 +62,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         emissiveIntensity: 0.5,
         toneMapped: true,
       };
-    } else if (temperature > yellowStarMinTemp) {
+    } else if (getStarClass(temperature) == starClasses.G) {
       const { nodes, materials } = sol;
       return {
         geometry: nodes.EsferaBaked.geometry,
@@ -76,7 +71,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         emissiveIntensity: 0.5,
         toneMapped: true,
       };
-    } else if (temperature > orangeStarMinTemp) {
+    } else if (getStarClass(temperature) == starClasses.K) {
       const { nodes, materials } = naranja;
       return {
         geometry: nodes.EsferaBaked.geometry,

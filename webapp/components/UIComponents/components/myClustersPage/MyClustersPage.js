@@ -63,7 +63,6 @@ const validateCluster = (cluster) => {
 const fileParse = async (file, onSuccess, onError) => {
   try {
     const decompressed = LZString.decompress(file);
-    console.log(decompressed);
     Papa.parse(decompressed, {
       complete: (result) => {
         if (!validateCluster(result.data)) {

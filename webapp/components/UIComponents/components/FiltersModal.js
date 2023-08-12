@@ -23,17 +23,35 @@ import IconButton from "@mui/material/IconButton";
 import { FormattedMessage } from "react-intl";
 import { SliderTypePicker, sliderTypes } from "./SliderTypePicker";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltersModalOpened } from "../selectors";
-import { closeFiltersModal } from "../actions";
-import { setNewClusterFilters } from "../../scenes/actions";
-import { getClusterFilters } from "../../scenes/selectors";
+import {
+  getClassAActive,
+  getClassBActive,
+  getClassFActive,
+  getClassGActive,
+  getClassKActive,
+  getClassMActive,
+  getClassOActive,
+  getFiltersModalOpened,
+  getMassFilter,
+  getTemperatureFilter,
+} from "../selectors";
+import {
+  setNewClassMActive,
+  closeFiltersModal,
+  setNewClassAActive,
+  setNewClassFActive,
+  setNewClassGActive,
+  setNewClassKActive,
+  setNewClassOActive,
+  setNewMassFilter,
+  setNewTemperatureFilter,
+  setNewClassBActive,
+} from "../actions";
 
 const StarClassCheckBox = ({ value, onChange, starClass }) => {
   return (
     <FormControlLabel
-      value={value}
-      onChange={onChange}
-      control={<Checkbox defaultChecked />}
+      control={<Checkbox checked={value} onChange={onChange} />}
       label={
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
           <Typography>
@@ -63,6 +81,24 @@ const StarClassCheckBox = ({ value, onChange, starClass }) => {
   );
 };
 
+const ChangeCommittedSlider = ({ defaultValue, min, max, track, disabled, valueLabelFormat, onChangeCommitted }) => {
+  const [value, setValue] = useState(defaultValue);
+
+  return (
+    <Slider
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+      onChangeCommitted={(_, value) => onChangeCommitted(value)}
+      valueLabelDisplay="auto"
+      min={min}
+      max={max}
+      track={track}
+      disabled={disabled}
+      valueLabelFormat={valueLabelFormat}
+    />
+  );
+};
+
 const FiltersModalTitle = ({ onClose }) => {
   return (
     <Box>
@@ -82,17 +118,15 @@ export const FiltersModal = () => {
   const dispatch = useDispatch();
   const filtersModalOpened = useSelector(getFiltersModalOpened);
   const [activate, setActivate] = React.useState(filtersModalOpened);
-  const [classOActivated, setClassOActivated] = useState(true);
-  const [classBActivated, setClassBActivated] = useState(true);
-  const [classAActivated, setClassAActivated] = useState(true);
-  const [classFActivated, setClassFActivated] = useState(true);
-  const [classGActivated, setClassGActivated] = useState(true);
-  const [classKActivated, setClassKActivated] = useState(true);
-  const [classMActivated, setClassMActivated] = useState(true);
-  const [temperatureSliderType, setTemperatureSliderType] = useState(sliderTypes.disabled);
-  const [temperatureSliderValue, setTemperatureSliderValue] = useState([0, 10]);
-  const [massSliderType, setMassSliderType] = useState(sliderTypes.disabled);
-  const [massSliderValue, setMassSliderValue] = useState([0, 10]);
+  const classOActive = useSelector(getClassOActive);
+  const classBActive = useSelector(getClassBActive);
+  const classAActive = useSelector(getClassAActive);
+  const classFActive = useSelector(getClassFActive);
+  const classGActive = useSelector(getClassGActive);
+  const classKActive = useSelector(getClassKActive);
+  const classMActive = useSelector(getClassMActive);
+  const temperatureFilter = useSelector(getTemperatureFilter);
+  const massFilter = useSelector(getMassFilter);
   const { width, height } = useWindowDimensions(0.8);
   const theme = createTheme(themeValues);
 
@@ -142,9 +176,12 @@ export const FiltersModal = () => {
                         <Stack direction="row" justifyContent="space-around">
                           <Stack spacing={2} alignItems="flex-start">
                             <FormControlLabel
-                              value={classOActivated}
-                              onChange={(event) => setClassOActivated(event.target.checked)}
-                              control={<Checkbox defaultChecked />}
+                              control={
+                                <Checkbox
+                                  checked={classOActive}
+                                  onChange={(event) => setNewClassOActive(dispatch, event.target.checked)}
+                                />
+                              }
                               label={
                                 <Stack direction="row" spacing={1}>
                                   <Typography>
@@ -161,19 +198,22 @@ export const FiltersModal = () => {
                               }
                             />
                             <StarClassCheckBox
-                              value={classAActivated}
-                              onChange={(event) => setClassAActivated(event.target.checked)}
+                              value={classAActive}
+                              onChange={(event) => setNewClassAActive(dispatch, event.target.checked)}
                               starClass="A"
                             />
                             <StarClassCheckBox
-                              value={classGActivated}
-                              onChange={(event) => setClassGActivated(event.target.checked)}
+                              value={classGActive}
+                              onChange={(event) => setNewClassGActive(dispatch, event.target.checked)}
                               starClass="G"
                             />
                             <FormControlLabel
-                              value={classMActivated}
-                              onChange={(event) => setClassMActivated(event.target.checked)}
-                              control={<Checkbox defaultChecked />}
+                              control={
+                                <Checkbox
+                                  checked={classMActive}
+                                  onChange={(event) => setNewClassMActive(dispatch, event.target.checked)}
+                                />
+                              }
                               label={
                                 <Stack direction="row" spacing={1}>
                                   <Typography>
@@ -192,18 +232,18 @@ export const FiltersModal = () => {
                           </Stack>
                           <Stack spacing={2} justifyContent="flex-start">
                             <StarClassCheckBox
-                              value={classBActivated}
-                              onChange={(event) => setClassBActivated(event.target.checked)}
+                              value={classBActive}
+                              onChange={(event) => setNewClassBActive(dispatch, event.target.checked)}
                               starClass="B"
                             />
                             <StarClassCheckBox
-                              value={classFActivated}
-                              onChange={(event) => setClassFActivated(event.target.checked)}
+                              value={classFActive}
+                              onChange={(event) => setNewClassFActive(dispatch, event.target.checked)}
                               starClass="F"
                             />
                             <StarClassCheckBox
-                              value={classKActivated}
-                              onChange={(event) => setClassKActivated(event.target.checked)}
+                              value={classKActive}
+                              onChange={(event) => setNewClassKActive(dispatch, event.target.checked)}
                               starClass="K"
                             />
                           </Stack>
@@ -214,18 +254,23 @@ export const FiltersModal = () => {
                         <Typography variant="subtitle1">
                           <FormattedMessage id="filtersModal.temperature" />
                         </Typography>
-                        <SliderTypePicker value={temperatureSliderType} onChange={setTemperatureSliderType} />
+                        <SliderTypePicker
+                          value={temperatureFilter.type}
+                          onChange={(type) => setNewTemperatureFilter(dispatch, temperatureFilter.value, type)}
+                        />
                       </Stack>
                       <Stack sx={{ width: "100%" }} alignItems="center">
                         <div style={{ width: "90%" }}>
-                          <Slider
-                            defaultValue={[15000, 25000]}
-                            onChangeCommitted={(_, value) => setTemperatureSliderValue(value)}
+                          <ChangeCommittedSlider
+                            defaultValue={temperatureFilter.value}
+                            onChangeCommitted={(value) =>
+                              setNewTemperatureFilter(dispatch, value, temperatureFilter.type)
+                            }
                             valueLabelDisplay="auto"
                             min={0}
                             max={40000}
-                            track={temperatureSliderType == sliderTypes.inverted ? "inverted" : "normal"}
-                            disabled={temperatureSliderType == sliderTypes.disabled}
+                            track={temperatureFilter.type == sliderTypes.inverted ? "inverted" : "normal"}
+                            disabled={temperatureFilter.type == sliderTypes.disabled}
                             valueLabelFormat={(value) => `${value} K`}
                           />
                         </div>
@@ -235,18 +280,21 @@ export const FiltersModal = () => {
                         <Typography variant="subtitle1">
                           <FormattedMessage id="filtersModal.mass" />
                         </Typography>
-                        <SliderTypePicker value={massSliderType} onChange={setMassSliderType} />
+                        <SliderTypePicker
+                          value={massFilter.type}
+                          onChange={(type) => setNewMassFilter(dispatch, massFilter.value, type)}
+                        />
                       </Stack>
                       <Stack sx={{ width: "100%" }} alignItems="center">
                         <div style={{ width: "90%" }}>
-                          <Slider
-                            defaultValue={[15, 35]}
-                            onChangeCommitted={(_, value) => setMassSliderValue(value)}
+                          <ChangeCommittedSlider
+                            defaultValue={massFilter.value}
+                            onChangeCommitted={(value) => setNewMassFilter(dispatch, value, massFilter.type)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={50}
-                            track={massSliderType == sliderTypes.inverted ? "inverted" : "normal"}
-                            disabled={massSliderType == sliderTypes.disabled}
+                            track={massFilter.type == sliderTypes.inverted ? "inverted" : "normal"}
+                            disabled={massFilter.type == sliderTypes.disabled}
                             valueLabelFormat={(value) => `${value} Ms`}
                           />
                         </div>
@@ -257,18 +305,15 @@ export const FiltersModal = () => {
                           color="secondary"
                           variant="outlined"
                           onClick={() => {
-                            setNewClusterFilters(dispatch, null);
-                            setClassOActivated(true);
-                            setClassBActivated(true);
-                            setClassAActivated(true);
-                            setClassFActivated(true);
-                            setClassGActivated(true);
-                            setClassKActivated(true);
-                            setClassMActivated(true);
-                            setTemperatureSliderType(sliderTypes.disabled);
-                            setTemperatureSliderValue([0, 10]);
-                            setMassSliderType(sliderTypes.disabled);
-                            setMassSliderValue([0, 10]);
+                            setNewClassOActive(dispatch, true);
+                            setNewClassBActive(dispatch, true);
+                            setNewClassAActive(dispatch, true);
+                            setNewClassFActive(dispatch, true);
+                            setNewClassGActive(dispatch, true);
+                            setNewClassKActive(dispatch, true);
+                            setNewClassMActive(dispatch, true);
+                            setNewTemperatureFilter(dispatch, [0, 10], sliderTypes.disabled);
+                            setNewMassFilter(dispatch, [0, 10], sliderTypes.disabled);
                           }}
                         >
                           <FormattedMessage id="filtersModal.reset" />
@@ -276,19 +321,6 @@ export const FiltersModal = () => {
                         <Button
                           variant="outlined"
                           onClick={() => {
-                            setNewClusterFilters(dispatch, {
-                              classOActivated: classOActivated,
-                              classBActivated: classBActivated,
-                              classAActivated: classAActivated,
-                              classFActivated: classFActivated,
-                              classGActivated: classGActivated,
-                              classKActivated: classKActivated,
-                              classMActivated: classMActivated,
-                              temperatureFilterType: temperatureSliderType,
-                              temperatureFilterValue: temperatureSliderValue,
-                              massFilterType: massSliderType,
-                              massFilterValue: massSliderValue,
-                            });
                             onClose();
                           }}
                         >

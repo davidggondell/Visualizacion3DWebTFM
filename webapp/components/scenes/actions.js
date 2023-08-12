@@ -5,10 +5,6 @@ export const setNewActiveCluster = (dispatch, cluster) => {
   dispatch(setActiveCluster(cluster));
 };
 
-export const setNewClusterFilters = (dispatch, clusterFilters) => {
-  dispatch(setClusterFilters(clusterFilters));
-};
-
 export const setPlayerControls = (dispatch) => {
   dispatch(setPlayerControlsEnabled(true));
 };

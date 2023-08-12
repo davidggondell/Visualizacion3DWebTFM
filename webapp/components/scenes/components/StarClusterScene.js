@@ -15,7 +15,7 @@ const CreateStars = memo(({ starCluster, canClickRef, isDraggingRef }) => {
   const massCenter = calculateMassCenter(starCluster);
   return (
     <>
-      {starCluster.map((star, i) => {
+      {starCluster.map((star) => {
         const x = (star.x - massCenter.x) * 200;
         const y = (star.y - massCenter.y) * 200;
         const z = (star.z - massCenter.z) * 200;
@@ -23,7 +23,7 @@ const CreateStars = memo(({ starCluster, canClickRef, isDraggingRef }) => {
 
         return (
           <StarModel
-            key={i}
+            key={star.ID}
             position={[x, y, z]}
             scale={star.Radius ? star.Radius : star.mass_i}
             temperature={starTemp}

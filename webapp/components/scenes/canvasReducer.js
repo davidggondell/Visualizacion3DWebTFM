@@ -3,8 +3,7 @@ import pesebre from "../../public/pesebre_edr3_ordered.json";
 
 const initialState = {
   activeCluster: pesebre,
-  clusterFilters: null,
-  playerControlsEnabled: false,
+  playerControlsEnabled: true,
   starZoom: null,
 };
 
@@ -15,9 +14,6 @@ export const canvasReducer = createSlice({
     setActiveCluster: (state, action) => {
       state.activeCluster = action.payload;
     },
-    setClusterFilters: (state, action) => {
-      state.clusterFilters = action.payload;
-    },
     setPlayerControlsEnabled: (state, action) => {
       state.playerControlsEnabled = action.payload;
     },
@@ -27,4 +23,4 @@ export const canvasReducer = createSlice({
   },
 });
 
-export const { setActiveCluster, setClusterFilters, setPlayerControlsEnabled, setStarZoom } = canvasReducer.actions;
+export const { setActiveCluster, setPlayerControlsEnabled, setStarZoom } = canvasReducer.actions;

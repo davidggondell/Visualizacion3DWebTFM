@@ -1,11 +1,90 @@
 import React, { useRef, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { getStarClass, getStarSize, starClasses } from "../../../utils/physicsFunctions";
+import {
+  blueStarMinTemp,
+  brightBlueStarMinTemp,
+  brightYellowStarMinTemp,
+  getStarClass,
+  getStarSize,
+  orangeStarMinTemp,
+  starClasses,
+  whiteStarMinTemp,
+  yellowStarMinTemp,
+} from "../../../utils/physicsFunctions";
 import { setNewStarZoom } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three";
 import { useEffect } from "react";
+import {
+  getClassAActive,
+  getClassBActive,
+  getClassFActive,
+  getClassGActive,
+  getClassKActive,
+  getClassMActive,
+  getClassOActive,
+  getMassFilter,
+  getTemperatureFilter,
+} from "../../../UIComponents/selectors";
+import { sliderTypes } from "../../../UIComponents/components/SliderTypePicker";
+
+const filterClass = (
+  temperature,
+  classOActivated,
+  classBActivated,
+  classAActivated,
+  classFActivated,
+  classGActivated,
+  classKActivated,
+  classMActivated,
+) => {
+  if (
+    !classOActivated &&
+    !classBActivated &&
+    !classAActivated &&
+    !classFActivated &&
+    !classGActivated &&
+    !classKActivated &&
+    !classMActivated
+  ) {
+    return false;
+  } else if (temperature > blueStarMinTemp) {
+    return !classOActivated;
+  } else if (temperature > brightBlueStarMinTemp) {
+    return !classBActivated;
+  } else if (temperature > whiteStarMinTemp) {
+    return !classAActivated;
+  } else if (temperature > brightYellowStarMinTemp) {
+    return !classFActivated;
+  } else if (temperature > yellowStarMinTemp) {
+    return !classGActivated;
+  } else if (temperature > orangeStarMinTemp) {
+    return !classKActivated;
+  } else {
+    return !classMActivated;
+  }
+};
+
+const filterTemperature = (temperature, temperatureFilterType, temperatureFilterValue) => {
+  if (temperatureFilterType == sliderTypes.activated) {
+    return temperature < temperatureFilterValue[0] || temperature > temperatureFilterValue[1];
+  } else if (temperatureFilterType == sliderTypes.inverted) {
+    return temperature > temperatureFilterValue[0] && temperature < temperatureFilterValue[1];
+  } else {
+    return false;
+  }
+};
+
+const filterMass = (mass, massFilterType, massFilterValue) => {
+  if (massFilterType == sliderTypes.activated) {
+    return mass < massFilterValue[0] || mass > massFilterValue[1];
+  }
+  if (massFilterType == sliderTypes.inverted) {
+    return mass > massFilterValue[0] && mass < massFilterValue[1];
+  }
+  return false;
+};
 
 export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef, isDraggingRef }) => {
   const { camera } = useThree();
@@ -20,6 +99,15 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
   const azulClara = useGLTF("/EstrellaAzulClara.gltf");
   const azul = useGLTF("/EstrellaAzul.gltf");
   const amarillaClara = useGLTF("/EstrellaAmarillaClara.gltf");
+  const classOActive = useSelector(getClassOActive);
+  const classBActive = useSelector(getClassBActive);
+  const classAActive = useSelector(getClassAActive);
+  const classFActive = useSelector(getClassFActive);
+  const classGActive = useSelector(getClassGActive);
+  const classKActive = useSelector(getClassKActive);
+  const classMActive = useSelector(getClassMActive);
+  const temperatureFilter = useSelector(getTemperatureFilter);
+  const massFilter = useSelector(getMassFilter);
 
   useEffect(() => {}, [starRef]);
 
@@ -32,7 +120,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         geometry: nodes.EsferaBaked.geometry,
         material: material,
         emissive: "cyan",
-        emissiveIntensity: 1.5,
+        emissiveIntensity: 1,
         toneMapped: true,
       };
     } else if (getStarClass(temperature) == starClasses.B) {
@@ -40,7 +128,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
-        emissive: "cyan",
+        emissive: "#50fcfc",
         emissiveIntensity: 0.3,
         toneMapped: true,
       };
@@ -49,7 +137,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
       return {
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
-        emissive: "cyan",
+        emissive: "#bbffff",
         emissiveIntensity: 0.2,
         toneMapped: false,
       };
@@ -86,7 +174,7 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
         geometry: nodes.EsferaBaked.geometry,
         material: materials.MaterialBaked,
         emissive: "red",
-        emissiveIntensity: 3.5,
+        emissiveIntensity: 2,
         toneMapped: true,
       };
     }
@@ -100,6 +188,20 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
     <group position={position} dispose={null}>
       <mesh
         ref={starRef}
+        visible={
+          !filterClass(
+            temperature,
+            classOActive,
+            classBActive,
+            classAActive,
+            classFActive,
+            classGActive,
+            classKActive,
+            classMActive,
+          ) &&
+          !filterTemperature(temperature, temperatureFilter.type, temperatureFilter.value) &&
+          !filterMass(mass, massFilter.type, massFilter.value)
+        }
         geometry={starModelValues.geometry}
         material={starModelValues.material}
         material-emissive={starModelValues.emissive}

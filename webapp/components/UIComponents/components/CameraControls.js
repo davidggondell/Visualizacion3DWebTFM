@@ -37,7 +37,7 @@ export const CameraControls = () => {
   const dispatch = useDispatch();
   const cameraControlsOpened = useSelector(getCameraControlsOpened);
   const [slideOpened, setSlideOpened] = useState(cameraControlsOpened);
-  const [cameraType, setCameraType] = useState(cameraTypes.orbit);
+  const [cameraType, setCameraType] = useState(cameraTypes.firstPerson);
   const themeValues = useTheme();
 
   useEffect(() => {
@@ -129,21 +129,21 @@ export const CameraControls = () => {
                       }
                     }}
                   >
-                    <ToggleButton size="small" sx={{ height: 40 }} value={cameraTypes.orbit}>
-                      <Stack direction="row" spacing={1}>
-                        <AutoModeIcon />
-                        <Typography>
-                          <FormattedMessage id="cameraControls.orbit" />
-                        </Typography>
-                      </Stack>
-                    </ToggleButton>
-                    <FullWidthDiv />
                     <ToggleButton size="small" sx={{ height: 40 }} value={cameraTypes.firstPerson}>
                       <Stack direction="row" spacing={1}>
                         <Typography>
                           <FormattedMessage id="cameraControls.firstPerson" />
                         </Typography>
                         <RocketLaunchIcon />
+                      </Stack>
+                    </ToggleButton>
+                    <FullWidthDiv />
+                    <ToggleButton size="small" sx={{ height: 40 }} value={cameraTypes.orbit}>
+                      <Stack direction="row" spacing={1}>
+                        <AutoModeIcon />
+                        <Typography>
+                          <FormattedMessage id="cameraControls.orbit" />
+                        </Typography>
                       </Stack>
                     </ToggleButton>
                   </ToggleButtonGroup>

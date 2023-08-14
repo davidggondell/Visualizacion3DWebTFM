@@ -7,6 +7,7 @@ import { StarClusterScene } from "./StarClusterScene";
 import { RootCanvasContext } from "../RootCanvasContext";
 import { useSelector } from "react-redux";
 import { getActiveCluster } from "../selectors";
+import { UseReduxProgress } from "../../hooks/useReduxProgress";
 
 export const RootCanvas = ({ cameraControllerRef }) => {
   const ambientLight = useRef(null);
@@ -36,6 +37,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
       }}
     >
       <Canvas ref={canvasRef}>
+        <UseReduxProgress />
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />
         <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={25000} />

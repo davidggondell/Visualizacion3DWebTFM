@@ -1,5 +1,9 @@
 import { closeAllControls } from "../UIComponents/actions";
-import { setActiveCluster, setPlayerControlsEnabled, setStarZoom } from "./canvasReducer";
+import { setActiveCluster, setPlayerControlsEnabled, setProgress, setStarZoom } from "./canvasReducer";
+
+export const setNewProgress = (dispatch, progress) => {
+  dispatch(setProgress(progress));
+};
 
 export const setNewActiveCluster = (dispatch, cluster) => {
   dispatch(setActiveCluster(cluster));

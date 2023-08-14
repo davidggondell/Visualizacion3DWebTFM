@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCameraControlsOpened } from "../selectors";
 import { closeCameraControls } from "../actions";
 import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
+import { getStarZoom } from "../../scenes/selectors";
 //import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
 
 const FullWidthDiv = ({ fullWidth }) => {
@@ -36,13 +37,14 @@ export const cameraTypes = {
 export const CameraControls = () => {
   const dispatch = useDispatch();
   const cameraControlsOpened = useSelector(getCameraControlsOpened);
+  const starZoom = useSelector(getStarZoom);
   const [slideOpened, setSlideOpened] = useState(cameraControlsOpened);
   const [cameraType, setCameraType] = useState(cameraTypes.firstPerson);
   const themeValues = useTheme();
 
   useEffect(() => {
-    setTimeout(() => setSlideOpened(cameraControlsOpened), 200);
-  }, [cameraControlsOpened]);
+    setTimeout(() => setSlideOpened(cameraControlsOpened && !starZoom), 200);
+  }, [cameraControlsOpened, starZoom]);
 
   useEffect(() => {
     if (cameraType == cameraTypes.orbit) {

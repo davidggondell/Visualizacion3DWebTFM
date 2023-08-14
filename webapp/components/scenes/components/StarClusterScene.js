@@ -1,10 +1,11 @@
 import { EffectComposer, Selection, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
-import React, { memo, useRef, useEffect } from "react";
+import React, { memo, useRef, useEffect, Suspense } from "react";
 import { calculateMassCenter } from "../../utils/physicsFunctions";
 import { StarModel } from "./3DModels/StarModel";
 import { useSelector } from "react-redux";
 import { getStarZoom } from "../selectors";
+import { CustomLoader } from "./CustomLoader";
 
 //Suns temperature in Kelvin
 const solarTemp = 5778;
@@ -73,17 +74,10 @@ const Composition = memo(({ starCluster, canClickRef }) => {
             height={300}
             opacity={1}
           />
-          <StarModel
-            key={1}
-            position={[0, 0, 0]}
-            scale={1}
-            temperature={solarTemp}
-            canClickRef={canClickRef}
-            isDraggingRef={dragging}
-            starId={1}
-            mass={1}
-          />
-          <CreateStars starCluster={starCluster} canClickRef={canClickRef} isDraggingRef={dragging} />
+          <Suspense fallback={null}>
+            <CreateStars starCluster={starCluster} canClickRef={canClickRef} isDraggingRef={dragging} />
+          </Suspense>
+          <CustomLoader />
         </EffectComposer>
       </Selection>
     </>

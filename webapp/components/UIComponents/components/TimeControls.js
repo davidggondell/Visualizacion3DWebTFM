@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { getTimeControlsOpened } from "../selectors";
 import { closeTimeControls } from "../actions";
+import { getStarZoom } from "../../scenes/selectors";
 
 const TimeSpeedNumber = ({ callBackRef }) => {
   const [value, setValue] = useState(0);
@@ -24,13 +25,14 @@ export const TimeControls = () => {
   const themeValues = useTheme();
   const dispatch = useDispatch();
   const timeControlsOpened = useSelector(getTimeControlsOpened);
+  const starZoom = useSelector(getStarZoom);
   const [slideOpened, setSlideOpened] = useState(timeControlsOpened);
   const setSpeedValueCallBack = useRef(null);
   const { width } = useWindowDimensions(0.7);
 
   useEffect(() => {
-    setTimeout(() => setSlideOpened(timeControlsOpened), 200);
-  }, [timeControlsOpened]);
+    setTimeout(() => setSlideOpened(timeControlsOpened && !starZoom), 200);
+  }, [timeControlsOpened, starZoom]);
 
   const onClose = useCallback(() => {
     setSlideOpened(false);
@@ -111,6 +113,7 @@ export const TimeControls = () => {
                   >
                     <div style={{ width: "90%" }}>
                       <Slider
+                        disabled
                         defaultValue={0}
                         onChange={(_, newValue) => {
                           if (setSpeedValueCallBack.current) {

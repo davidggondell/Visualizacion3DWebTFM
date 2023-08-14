@@ -38,7 +38,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
       <Canvas ref={canvasRef}>
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />
-        <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={100000} />
+        <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={25000} />
         <Stats />
         <StarClusterScene starCluster={activeCluster} />
       </Canvas>

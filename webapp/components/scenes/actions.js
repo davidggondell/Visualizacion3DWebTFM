@@ -1,5 +1,5 @@
 import { closeAllControls } from "../UIComponents/actions";
-import { setActiveCluster, setClusterFilters, setPlayerControlsEnabled, setStarZoom } from "./canvasReducer";
+import { setActiveCluster, setPlayerControlsEnabled, setStarZoom } from "./canvasReducer";
 
 export const setNewActiveCluster = (dispatch, cluster) => {
   dispatch(setActiveCluster(cluster));
@@ -14,7 +14,6 @@ export const setOrbitControls = (dispatch) => {
 };
 
 export const setNewStarZoom = (dispatch, starZoom) => {
-  closeAllControls(dispatch);
   dispatch(setStarZoom(starZoom));
 };
 

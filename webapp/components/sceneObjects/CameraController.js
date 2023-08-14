@@ -84,7 +84,7 @@ export const CameraController = () => {
               <Player enabled={enabled} />
             </Physics>
           ) : (
-            <OrbitControls />
+            <OrbitControls enablePan={false} />
           )}
         </>
       )}

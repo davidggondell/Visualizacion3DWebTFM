@@ -13,7 +13,7 @@ const starDetailsWidth = 320;
 
 export const StarDetailsCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
   const theme = createTheme(themeValues);
-  position, position[0], position[1];
+
   return (
     <Card
       animator={{ activate }}

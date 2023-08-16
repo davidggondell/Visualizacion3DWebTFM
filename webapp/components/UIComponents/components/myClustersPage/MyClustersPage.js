@@ -106,7 +106,7 @@ const ClusterItem = memo(({ id, name, cluster, openDelete, openError, setBackdro
                   (object) => {
                     setBackdropOpened(false);
                     setNewActiveCluster(dispatch, object);
-                    router.push("/");
+                    router.push("/clusterView");
                   },
                   (error) => {
                     setBackdropOpened(false);

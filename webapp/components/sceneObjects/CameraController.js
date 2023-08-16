@@ -7,20 +7,15 @@ import { getPlayerControlsEnabled, getStarZoom } from "../scenes/selectors";
 import { CameraControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { closeStarZoom } from "../scenes/actions";
-
-function calcularAngulo([x, y, z]) {
-  var azimuth = Math.atan2(y, x);
-  var polar = Math.atan2(Math.sqrt(x * x + y * y), z);
-
-  return {
-    azimuth: azimuth,
-    polar: polar,
-  };
-}
+import * as THREE from "three";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const DetailsCamera = ({ starZoom }) => {
   const dispatch = useDispatch();
-  const { camera } = useThree();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  const matchesMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { camera, viewport } = useThree();
   const cameraControlsRef = useRef(null);
 
   useEffect(() => {
@@ -52,14 +47,34 @@ const DetailsCamera = ({ starZoom }) => {
         } else {
           const [x, y, z] = starZoom.position;
           const [xAhead, yAhead, zAhead] = starZoom.pointAhead;
+          const hFOV =
+            (2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect) * 180) / Math.PI;
 
           cameraControlsRef.current.setTarget(xAhead, yAhead, zAhead, false);
           cameraControlsRef.current.setTarget(x, y, z, true);
-          cameraControlsRef.current.dollyTo(starZoom.modelSize + 10, true);
-          setTimeout(() => {
-            cameraControlsRef.current.rotatePolarTo(Math.PI / 2, true);
-            cameraControlsRef.current.truck(-2, 0, true);
-          }, 500);
+
+          if (matches) {
+            const distance = starZoom.modelSize / Math.tan(THREE.MathUtils.degToRad((camera.fov * 0.8) / 2));
+            const lateralAdjustment =
+              distance * Math.tan(THREE.MathUtils.degToRad((hFOV * 0.85) / 2)) - starZoom.modelSize;
+
+            cameraControlsRef.current.dollyTo(distance, true);
+            setTimeout(() => {
+              cameraControlsRef.current.rotatePolarTo(Math.PI / 2, true);
+              cameraControlsRef.current.truck(-lateralAdjustment, 0, true);
+            }, 500);
+          } else {
+            const ratio = matchesMobile ? 0.8 : 0.5;
+            const distance = starZoom.modelSize / Math.tan(THREE.MathUtils.degToRad((hFOV * ratio) / 2));
+            const verticalAdjustment =
+              distance * Math.tan(THREE.MathUtils.degToRad((camera.fov * 0.85) / 2)) - starZoom.modelSize;
+
+            cameraControlsRef.current.dollyTo(distance, true);
+            setTimeout(() => {
+              cameraControlsRef.current.rotatePolarTo(Math.PI / 2, true);
+              cameraControlsRef.current.truck(0, verticalAdjustment, true);
+            }, 500);
+          }
         }
       }
     };

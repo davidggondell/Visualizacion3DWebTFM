@@ -59,7 +59,7 @@ export default {
   "starDetails.coordinates.y": "Y: {coord}",
   "starDetails.coordinates.z": "Z: {coord}",
   "starDetails.mass": "Masa: {mass} M☉",
-  "starDetails.radius": "Radio {radius} R☉",
+  "starDetails.radius": "Radio: {radius} R☉",
   "starDetails.temperature": "Temperatura: {temperature} K",
 
   "myClusters.uploadFile": "Subir fichero CSV",

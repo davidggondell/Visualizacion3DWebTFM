@@ -2,7 +2,17 @@ import { ArwesThemeProvider, Card, Text } from "@arwes/core";
 import React, { useEffect, useState, useRef, memo } from "react";
 import { getStarZoom } from "../../scenes/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { IconButton, ThemeProvider, Typography, Stack, useTheme, Slide, createTheme } from "@mui/material";
+import {
+  IconButton,
+  ThemeProvider,
+  Typography,
+  Stack,
+  useTheme,
+  Slide,
+  createTheme,
+  useMediaQuery,
+  Grid,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { setNewStarZoom } from "../../scenes/actions";
 import { themeValues } from "../../utils/themeValues";
@@ -11,7 +21,7 @@ import { getStarClass } from "../../utils/physicsFunctions";
 
 const starDetailsWidth = 320;
 
-export const StarDetailsCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
+const StarDetailsBigScreenCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
   const theme = createTheme(themeValues);
 
   return (
@@ -76,13 +86,95 @@ export const StarDetailsCard = memo(({ activate, closeRef, starId, position, mas
   );
 });
 
+const StarDetailsSmallScreenCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
+  const theme = createTheme(themeValues);
+
+  return (
+    <Card
+      animator={{ activate }}
+      title={
+        <ThemeProvider theme={theme}>
+          <Stack sx={{ width: "calc(100vw - 40px)" }} direction="row" justifyContent="space-between">
+            <Typography sx={{ fontSize: 18, display: "flex", alignItems: "center" }}>
+              <FormattedMessage id="starDetails.id" values={{ starId: starId }} />
+            </Typography>
+            <IconButton
+              color="primary"
+              onClick={() => {
+                if (closeRef?.current) {
+                  closeRef.current();
+                }
+              }}
+            >
+              <CloseIcon sx={{ fontSize: 30 }} />
+            </IconButton>
+          </Stack>
+        </ThemeProvider>
+      }
+      style={{ width: "calc(100vw + 0.9px)", backgroundColor: "rgba(2, 17, 20,0.8)" }}
+    >
+      <Text>
+        <ThemeProvider theme={theme}>
+          <Grid sx={{ width: "100%" }} container rowSpacing={1}>
+            <Grid item xs={6}>
+              <Typography>
+                <FormattedMessage id="starDetails.stellarClass" values={{ stellarClass: getStarClass(temperature) }} />
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>
+                <FormattedMessage id="starDetails.mass" values={{ mass: mass.toFixed(2) }} />
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography>
+                <FormattedMessage id="starDetails.radius" values={{ radius: radius.toFixed(2) }} />
+              </Typography>
+            </Grid>
+            <Grid item xs={6} sx={{ overflowWrap: "break-word" }}>
+              <Typography>
+                <FormattedMessage id="starDetails.temperature" values={{ temperature: temperature.toFixed(2) }} />
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Grid sx={{ width: "100%" }} container columnSpacing={2} rowSpacing={1}>
+                <Grid item>
+                  <Typography>
+                    <FormattedMessage id="starDetails.coordinates" />
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    <FormattedMessage id="starDetails.coordinates.x" values={{ coord: position[0].toFixed(2) }} />
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    <FormattedMessage id="starDetails.coordinates.y" values={{ coord: position[1].toFixed(2) }} />
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    <FormattedMessage id="starDetails.coordinates.z" values={{ coord: position[2].toFixed(2) }} />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </ThemeProvider>
+      </Text>
+    </Card>
+  );
+});
+
 export const StarDetails = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
   const starZoom = useSelector(getStarZoom);
   const starZoomRef = useRef(null);
   const [doRender, setDoRender] = useState(!!starZoom);
   const [activate, setActivate] = useState(!!starZoom);
-  const theme = useTheme();
   const closeRef = useRef(null);
 
   useEffect(() => {
@@ -104,27 +196,50 @@ export const StarDetails = () => {
     <>
       {doRender && (
         <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "0%",
-            transform: "translate(0, -50%)",
-            zIndex: 99999,
-          }}
+          style={
+            matches
+              ? {
+                  position: "absolute",
+                  top: "50%",
+                  left: "0%",
+                  transform: "translate(0, -50%)",
+                  zIndex: 99999,
+                }
+              : {
+                  position: "absolute",
+                  bottom: "0%",
+                  left: "50%",
+                  transform: "translate(-50%, 0)",
+                  zIndex: 99999,
+                  overflow: "hidden",
+                }
+          }
         >
           <ThemeProvider theme={theme}>
             <Slide direction="right" in={doRender} unmountOnExit>
-              <div>
+              <div style={{ overflow: "hidden" }}>
                 <ArwesThemeProvider>
-                  <StarDetailsCard
-                    activate={activate}
-                    closeRef={closeRef}
-                    starId={starZoom.starId}
-                    position={starZoom.position}
-                    mass={starZoom.mass}
-                    radius={starZoom.starSize}
-                    temperature={starZoom.temperature}
-                  />
+                  {matches ? (
+                    <StarDetailsBigScreenCard
+                      activate={activate}
+                      closeRef={closeRef}
+                      starId={starZoom.starId}
+                      position={starZoom.position}
+                      mass={starZoom.mass}
+                      radius={starZoom.starSize}
+                      temperature={starZoom.temperature}
+                    />
+                  ) : (
+                    <StarDetailsSmallScreenCard
+                      activate={activate}
+                      closeRef={closeRef}
+                      starId={starZoom.starId}
+                      position={starZoom.position}
+                      mass={starZoom.mass}
+                      radius={starZoom.starSize}
+                      temperature={starZoom.temperature}
+                    />
+                  )}
                 </ArwesThemeProvider>
               </div>
             </Slide>

@@ -6,6 +6,7 @@ const initialState = {
   timeControlsOpened: false,
   cameraControlsOpened: false,
   filtersModalOpened: false,
+  instructionsOpened: false,
   classOActive: false,
   classBActive: false,
   classAActive: false,
@@ -38,6 +39,9 @@ export const appControlsReducer = createSlice({
     },
     setFiltersModalOpened: (state, action) => {
       state.filtersModalOpened = action.payload;
+    },
+    setInstructionsOpened: (state, action) => {
+      state.instructionsOpened = action.payload;
     },
     setClassOActive: (state, action) => {
       state.classOActive = action.payload;
@@ -74,6 +78,7 @@ export const {
   setTimeControlsOpened,
   setCameraControlsOpened,
   setFiltersModalOpened,
+  setInstructionsOpened,
   setClassOActive,
   setClassBActive,
   setClassAActive,

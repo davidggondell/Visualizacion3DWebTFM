@@ -62,3 +62,13 @@ export const getLocalStorageUsage = () => {
   }
   return totalSpace;
 };
+
+export const getInstructionsUsed = () => {
+  return window.localStorage.getItem("instructionsUsed") === "";
+};
+
+export const setInstructionsUsed = () => {
+  if (!getInstructionsUsed()) {
+    window.localStorage.setItem("instructionsUsed", "");
+  }
+};

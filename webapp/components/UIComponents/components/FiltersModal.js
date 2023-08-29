@@ -104,7 +104,9 @@ const FiltersModalTitle = ({ onClose }) => {
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <FilterAltOutlinedIcon sx={{ color: themeValues.palette.primary.main, fontSize: 40 }} />
-        <Typography variant="h5">Filtros de estrellas</Typography>
+        <Typography variant="h5">
+          <FormattedMessage id="filtersModal.title" />
+        </Typography>
         <IconButton color="primary" onClick={() => onClose()}>
           <CloseIcon sx={{ fontSize: 40 }} />
         </IconButton>

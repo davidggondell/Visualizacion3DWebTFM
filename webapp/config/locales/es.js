@@ -78,4 +78,26 @@ export default {
   "myClusters.play.errorDecompressing": "Error descomprimiendo el fichero",
   "myClusters.play.errorParsing": "Error parseando el fichero",
   "myClusters.play.errorValidating": "El fichero CSV no tiene los campos necesarios o hay alguno incorrecto",
+
+  "instructions.title": "Instrucciones",
+  "instructions.basic.title": "Instrucciones básicas",
+  "instructions.basic.modes": "La aplicación cuenta con dos modos para ver las estrellas:",
+  "instructions.basic.modes.orbit": "La cámara se mueve orbitando el centro de masas del cúmulo",
+  "instructions.basic.modes.firstPerson": "En este modo se puede mirar a cualquier dirección y moverse libremente",
+  "instructions.basic.modes.choose":
+    "Se puede <b>cambiar entre distintos modos</b> mediante los <b>controles de cámara</b> dentro de la aplicación disponibles en el <b>menu lateral</b>",
+  "instructions.keyboard": "Teclado y ratón",
+  "instructions.keyboard.camera":
+    "Para <b>mover la cámara</b> se utilizan el botón izquierdo del raton, pulsando y arrastrando",
+  "instructions.keyboard.zoom": "El <b>zoom</b> de la cámara se controla mediante la rueda del ratón",
+  "instructions.keyboard.click": "Al hacer <b>clic</b> en una estrella se mostrarán los detalles de la misma",
+  "instructions.keyboard.move":
+    "En el modo de primera persona el <b>desplazamiento por el espacio</b> se realiza mediante las teclas <b>W, A, S y D</b>",
+  "instructions.touch": "Pantalla táctil",
+  "instructions.touch.camera": "La <b>camara</b> se moverá deslizando el dedo por la pantalla",
+  "instructions.touch.zoom":
+    "El <b>zoom</b> y el <b>desplazamiento por el espacio</b> se realizan pellizcando la pantalla con dos dedos",
+  "instructions.touch.touch":
+    "Al <b>tocar</b> en una estrella se mostrarán los detalles de la misma. En dispositivos táctiles es necesario estar cerca de la estrela para que se muestren los detalles",
+  "instructions.controls": "Controles",
 };

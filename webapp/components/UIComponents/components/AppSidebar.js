@@ -13,7 +13,7 @@ import { CameraIcon } from "../../../icons/CameraIcon";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { AstronautIcon } from "../../../icons/AstronautIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { getFiltersModalOpened, getSidebarOpened } from "../selectors";
+import { getFiltersModalOpened, getInstructionsOpened, getSidebarOpened } from "../selectors";
 import { closeSidebar, openCameraControls, openFiltersModal, openSidebar, openTimeControls } from "../actions";
 import Slide from "@mui/material/Slide";
 import { FormattedMessage } from "react-intl";
@@ -61,6 +61,7 @@ export const AppSidebar = () => {
   const router = useRouter();
   const open = useSelector(getSidebarOpened);
   const filtersModalOpened = useSelector(getFiltersModalOpened);
+  const instructionsOpened = useSelector(getInstructionsOpened);
   const starZoom = useSelector(getStarZoom);
   const dispatch = useDispatch();
   const { height } = useWindowDimensions(0.7);
@@ -96,7 +97,7 @@ export const AppSidebar = () => {
           closed={false}
           shadow
         >
-          <Slide direction="left" in={!filtersModalOpened && !starZoom}>
+          <Slide direction="left" in={!filtersModalOpened && !instructionsOpened && !starZoom}>
             <Box
               sx={{
                 display: "flex",

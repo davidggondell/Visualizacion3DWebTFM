@@ -78,4 +78,11 @@ export default {
   "myClusters.play.errorDecompressing": "Error descompressing file",
   "myClusters.play.errorParsing": "Error parsing file",
   "myClusters.play.errorValidating": "CSV file does not have necessary field or there are some incorrect",
+
+  "instructions.title": "Instrutions",
+  "instructions.keyboard": "Keyboard and mouse",
+  "instructions.keyboard.camera": "",
+  "instructions.keyboard.zoom": "",
+  "instructions.keyboard.move": "",
+  "instructions.touch": "Touch screen",
 };

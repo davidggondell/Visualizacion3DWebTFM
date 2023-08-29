@@ -30,7 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInstructionsOpened } from "../selectors";
 import { closeInstructions, openInstructions } from "../actions";
 import { getInstructionsUsed, setInstructionsUsed } from "../../utils/myLocalStorage";
-import { WasdIcon } from "../BaseComponents/wasdIcon";
+import { WasdIcon } from "../../../icons/WasdIcon";
 import { FormattedMessage } from "react-intl";
 
 const InstructionsModalTitle = ({ onClose }) => {

@@ -1,7 +1,7 @@
 import { EffectComposer, Selection, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import React, { memo, useRef, useEffect, Suspense } from "react";
-import { calculateMassCenter } from "../../utils/physicsFunctions";
+import { calculateMassCenter, cartesianCoordinatesToRenderCoordinates } from "../../utils/physicsFunctions";
 import { StarModel } from "./3DModels/StarModel";
 import { useSelector } from "react-redux";
 import { getStarZoom } from "../selectors";
@@ -16,9 +16,7 @@ const CreateStars = memo(({ starCluster, canClickRef, isDraggingRef }) => {
   return (
     <>
       {starCluster.map((star) => {
-        const x = (star.x - massCenter.x) * 200;
-        const y = (star.y - massCenter.y) * 200;
-        const z = (star.z - massCenter.z) * 200;
+        const { x, y, z } = cartesianCoordinatesToRenderCoordinates(star.x, star.y, star.z, massCenter);
         const starTemp = 10 ** star.temp_i;
 
         return (
@@ -26,9 +24,14 @@ const CreateStars = memo(({ starCluster, canClickRef, isDraggingRef }) => {
             key={star.ID}
             position={[x, y, z]}
             scale={star.Radius ? star.Radius : star.mass_i}
+            coordinates={{ x: star.x, y: star.y, z: star.z }}
             temperature={starTemp}
             starId={star.ID}
             mass={star.mass_i}
+            pm_ra={star.PMRA}
+            pm_dec={star.PMDEC}
+            radial_velocity={star.vRad}
+            massCenter={massCenter}
             canClickRef={canClickRef}
             isDraggingRef={isDraggingRef}
           />

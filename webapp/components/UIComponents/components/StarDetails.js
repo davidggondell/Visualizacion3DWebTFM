@@ -21,7 +21,7 @@ import { getStarClass } from "../../utils/physicsFunctions";
 
 const starDetailsWidth = 320;
 
-const StarDetailsBigScreenCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
+const StarDetailsBigScreenCard = memo(({ activate, closeRef, starId, coordinates, mass, radius, temperature }) => {
   const theme = createTheme(themeValues);
 
   return (
@@ -60,13 +60,13 @@ const StarDetailsBigScreenCard = memo(({ activate, closeRef, starId, position, m
               </Typography>
               <Stack sx={{ paddingLeft: 2 }}>
                 <Typography>
-                  <FormattedMessage id="starDetails.coordinates.x" values={{ coord: position[0].toFixed(2) }} />
+                  <FormattedMessage id="starDetails.coordinates.x" values={{ coord: coordinates.x.toFixed(2) }} />
                 </Typography>
                 <Typography>
-                  <FormattedMessage id="starDetails.coordinates.y" values={{ coord: position[1].toFixed(2) }} />
+                  <FormattedMessage id="starDetails.coordinates.y" values={{ coord: coordinates.y.toFixed(2) }} />
                 </Typography>
                 <Typography>
-                  <FormattedMessage id="starDetails.coordinates.z" values={{ coord: position[2].toFixed(2) }} />
+                  <FormattedMessage id="starDetails.coordinates.z" values={{ coord: coordinates.z.toFixed(2) }} />
                 </Typography>
               </Stack>
             </Stack>
@@ -86,7 +86,7 @@ const StarDetailsBigScreenCard = memo(({ activate, closeRef, starId, position, m
   );
 });
 
-const StarDetailsSmallScreenCard = memo(({ activate, closeRef, starId, position, mass, radius, temperature }) => {
+const StarDetailsSmallScreenCard = memo(({ activate, closeRef, starId, coordinates, mass, radius, temperature }) => {
   const theme = createTheme(themeValues);
 
   return (
@@ -145,17 +145,17 @@ const StarDetailsSmallScreenCard = memo(({ activate, closeRef, starId, position,
                 </Grid>
                 <Grid item>
                   <Typography>
-                    <FormattedMessage id="starDetails.coordinates.x" values={{ coord: position[0].toFixed(2) }} />
+                    <FormattedMessage id="starDetails.coordinates.x" values={{ coord: coordinates.x.toFixed(2) }} />
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography>
-                    <FormattedMessage id="starDetails.coordinates.y" values={{ coord: position[1].toFixed(2) }} />
+                    <FormattedMessage id="starDetails.coordinates.y" values={{ coord: coordinates.y.toFixed(2) }} />
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography>
-                    <FormattedMessage id="starDetails.coordinates.z" values={{ coord: position[2].toFixed(2) }} />
+                    <FormattedMessage id="starDetails.coordinates.z" values={{ coord: coordinates.z.toFixed(2) }} />
                   </Typography>
                 </Grid>
               </Grid>
@@ -224,7 +224,7 @@ export const StarDetails = () => {
                       activate={activate}
                       closeRef={closeRef}
                       starId={starZoom.starId}
-                      position={starZoom.position}
+                      coordinates={starZoom.coordinates}
                       mass={starZoom.mass}
                       radius={starZoom.starSize}
                       temperature={starZoom.temperature}
@@ -234,7 +234,7 @@ export const StarDetails = () => {
                       activate={activate}
                       closeRef={closeRef}
                       starId={starZoom.starId}
-                      position={starZoom.position}
+                      coordinates={starZoom.coordinates}
                       mass={starZoom.mass}
                       radius={starZoom.starSize}
                       temperature={starZoom.temperature}

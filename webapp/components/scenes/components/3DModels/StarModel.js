@@ -1,10 +1,12 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useContext } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import {
+  applySpaceMotion,
   blueStarMinTemp,
   brightBlueStarMinTemp,
   brightYellowStarMinTemp,
+  cartesianCoordinatesToRenderCoordinates,
   getStarClass,
   getStarSize,
   orangeStarMinTemp,
@@ -28,6 +30,7 @@ import {
   getTemperatureFilter,
 } from "../../../UIComponents/selectors";
 import { sliderTypes } from "../../../UIComponents/components/SliderTypePicker";
+import { RootUIContext } from "../../../UIComponents/RootUIContext";
 
 const filterClass = (
   temperature,
@@ -86,7 +89,22 @@ const filterMass = (mass, massFilterType, massFilterValue) => {
   return false;
 };
 
-export const StarModel = ({ position, scale, temperature, starId, mass, canClickRef, isDraggingRef }) => {
+export const StarModel = ({
+  position,
+  scale,
+  temperature,
+  coordinates,
+  starId,
+  mass,
+  pm_ra,
+  pm_dec,
+  radial_velocity,
+  massCenter,
+  canClickRef,
+  isDraggingRef,
+}) => {
+  const starYear = useRef(0);
+  const { yearRef } = useContext(RootUIContext);
   const { camera } = useThree();
   const dispatch = useDispatch();
   const startRotation = Math.random() * Math.PI;
@@ -109,7 +127,10 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
   const temperatureFilter = useSelector(getTemperatureFilter);
   const massFilter = useSelector(getMassFilter);
 
-  useEffect(() => {}, [starRef]);
+  useEffect(() => {
+    const interval = setInterval(() => {}, 10);
+    return () => clearInterval(interval);
+  }, []);
 
   const starModelValues = useMemo(() => {
     if (getStarClass(temperature) == starClasses.O) {
@@ -182,11 +203,33 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
 
   useFrame(({ clock }) => {
     starRef.current.rotation.y = startRotation + clock.getElapsedTime() / 4;
+    if (starYear.current != yearRef.current) {
+      starYear.current = yearRef.current;
+      const newCoords = applySpaceMotion(
+        coordinates.x,
+        coordinates.y,
+        coordinates.z,
+        pm_ra,
+        pm_dec,
+        radial_velocity,
+        yearRef.current,
+      );
+      const newCoordsRender = cartesianCoordinatesToRenderCoordinates(
+        newCoords.x,
+        newCoords.y,
+        newCoords.z,
+        massCenter,
+      );
+      starRef.current.position.x = newCoordsRender.x;
+      starRef.current.position.y = newCoordsRender.y;
+      starRef.current.position.z = newCoordsRender.z;
+    }
   });
 
   return (
-    <group position={position} dispose={null}>
+    <group dispose={null}>
       <mesh
+        position={position}
         ref={starRef}
         visible={
           !filterClass(
@@ -215,12 +258,18 @@ export const StarModel = ({ position, scale, temperature, starId, mass, canClick
             var rotation = camera.rotation.clone();
             var direction = new THREE.Vector3(0, 0, -1);
             direction.applyEuler(rotation);
-            var coordinates = cameraPosition.clone().add(direction);
-            setNewStarZoom(dispatch, {
+            var ahead = cameraPosition.clone().add(direction);
+            console.log({
               position: position,
+              starRefPos: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
+              coordinates: coordinates,
+            });
+            setNewStarZoom(dispatch, {
+              position: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
               cameraPosition: cameraPosition.toArray(),
-              pointAhead: coordinates.toArray(),
+              pointAhead: ahead.toArray(),
               modelSize: starSize,
+              coordinates: coordinates,
               starSize: scale,
               starId: starId,
               mass: mass,

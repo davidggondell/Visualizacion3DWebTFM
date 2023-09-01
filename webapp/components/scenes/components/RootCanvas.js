@@ -1,4 +1,4 @@
-import { PerspectiveCamera, Stats } from "@react-three/drei";
+import { AdaptiveDpr, PerspectiveCamera, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useRef, useEffect } from "react";
 
@@ -43,6 +43,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
         <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={25000} />
         <Stats />
         <StarClusterScene starCluster={activeCluster} />
+        <AdaptiveDpr pixelated />
       </Canvas>
     </RootCanvasContext.Provider>
   );

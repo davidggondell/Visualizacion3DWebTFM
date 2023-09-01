@@ -46,7 +46,7 @@ export default {
 
   "timeControls.rewind": "Rewind",
   "timeControls.forward": "Forward",
-  "timeControls.year": "Year:",
+  "timeControls.yearz": "years",
   "timeControls.speed": "years/s",
 
   "cameraControls.orbit": "Orbit",

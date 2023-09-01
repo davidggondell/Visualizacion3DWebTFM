@@ -46,7 +46,7 @@ export default {
 
   "timeControls.rewind": "Retroceder",
   "timeControls.forward": "Avanzar",
-  "timeControls.year": "Año:",
+  "timeControls.years": "años",
   "timeControls.speed": "años/s",
 
   "cameraControls.orbit": "Órbita",

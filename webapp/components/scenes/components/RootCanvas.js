@@ -1,7 +1,6 @@
-import { AdaptiveDpr, PerspectiveCamera, Stats } from "@react-three/drei";
+import { AdaptiveDpr, PerformanceMonitor, PerspectiveCamera, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, { useRef, useEffect } from "react";
-
+import React, { useRef, useEffect, useState } from "react";
 import { CameraController } from "../../sceneObjects/CameraController";
 import { StarClusterScene } from "./StarClusterScene";
 import { RootCanvasContext } from "../RootCanvasContext";
@@ -10,6 +9,7 @@ import { getActiveCluster } from "../selectors";
 import { UseReduxProgress } from "../../hooks/useReduxProgress";
 
 export const RootCanvas = ({ cameraControllerRef }) => {
+  const [dpr, setDpr] = useState(1.5);
   const ambientLight = useRef(null);
   const canvasRef = useRef(null);
   const activeCluster = useSelector(getActiveCluster);
@@ -36,14 +36,14 @@ export const RootCanvas = ({ cameraControllerRef }) => {
         canvasRef: canvasRef,
       }}
     >
-      <Canvas ref={canvasRef}>
+      <Canvas ref={canvasRef} dpr={dpr}>
+        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(0.5)} />
         <UseReduxProgress />
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />
         <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={25000} />
         <Stats />
         <StarClusterScene starCluster={activeCluster} />
-        <AdaptiveDpr pixelated />
       </Canvas>
     </RootCanvasContext.Provider>
   );

@@ -59,9 +59,9 @@ const InstructionsQuote = ({ title, content }) => {
           <Typography variant="h6">{title}</Typography>
           <Divider />
           <List sx={{ width: "100%" }} disablePadding>
-            {content.map((item) => {
+            {content.map((item, index) => {
               return (
-                <ListItem>
+                <ListItem key={index}>
                   <ListItemText>
                     <FormattedMessage
                       id={item.text}

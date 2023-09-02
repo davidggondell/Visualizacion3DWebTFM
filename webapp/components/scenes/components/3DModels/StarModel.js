@@ -227,59 +227,57 @@ export const StarModel = ({
   });
 
   return (
-    <group dispose={null}>
-      <mesh
-        position={position}
-        ref={starRef}
-        visible={
-          !filterClass(
-            temperature,
-            classOActive,
-            classBActive,
-            classAActive,
-            classFActive,
-            classGActive,
-            classKActive,
-            classMActive,
-          ) &&
-          !filterTemperature(temperature, temperatureFilter.type, temperatureFilter.value) &&
-          !filterMass(mass, massFilter.type, massFilter.value)
+    <mesh
+      position={position}
+      ref={starRef}
+      visible={
+        !filterClass(
+          temperature,
+          classOActive,
+          classBActive,
+          classAActive,
+          classFActive,
+          classGActive,
+          classKActive,
+          classMActive,
+        ) &&
+        !filterTemperature(temperature, temperatureFilter.type, temperatureFilter.value) &&
+        !filterMass(mass, massFilter.type, massFilter.value)
+      }
+      geometry={starModelValues.geometry}
+      material={starModelValues.material}
+      material-emissive={starModelValues.emissive}
+      material-emissiveIntensity={starModelValues.emissiveIntensity}
+      material-toneMapped={starModelValues.toneMapped}
+      scale={starSize}
+      onClick={(event) => {
+        if (canClickRef?.current && !isDraggingRef.current) {
+          event.stopPropagation();
+          var cameraPosition = camera.position;
+          var rotation = camera.rotation.clone();
+          var direction = new THREE.Vector3(0, 0, -1);
+          direction.applyEuler(rotation);
+          var ahead = cameraPosition.clone().add(direction);
+          console.log({
+            position: position,
+            starRefPos: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
+            coordinates: coordinates,
+          });
+          setNewStarZoom(dispatch, {
+            position: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
+            cameraPosition: cameraPosition.toArray(),
+            pointAhead: ahead.toArray(),
+            modelSize: starSize,
+            coordinates: coordinates,
+            starSize: scale,
+            starId: starId,
+            mass: mass,
+            temperature: temperature,
+            obsolete: false,
+          });
         }
-        geometry={starModelValues.geometry}
-        material={starModelValues.material}
-        material-emissive={starModelValues.emissive}
-        material-emissiveIntensity={starModelValues.emissiveIntensity}
-        material-toneMapped={starModelValues.toneMapped}
-        scale={starSize}
-        onClick={(event) => {
-          if (canClickRef?.current && !isDraggingRef.current) {
-            event.stopPropagation();
-            var cameraPosition = camera.position;
-            var rotation = camera.rotation.clone();
-            var direction = new THREE.Vector3(0, 0, -1);
-            direction.applyEuler(rotation);
-            var ahead = cameraPosition.clone().add(direction);
-            console.log({
-              position: position,
-              starRefPos: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
-              coordinates: coordinates,
-            });
-            setNewStarZoom(dispatch, {
-              position: [starRef.current.position.x, starRef.current.position.y, starRef.current.position.z],
-              cameraPosition: cameraPosition.toArray(),
-              pointAhead: ahead.toArray(),
-              modelSize: starSize,
-              coordinates: coordinates,
-              starSize: scale,
-              starId: starId,
-              mass: mass,
-              temperature: temperature,
-              obsolete: false,
-            });
-          }
-        }}
-      />
-    </group>
+      }}
+    />
   );
 };
 

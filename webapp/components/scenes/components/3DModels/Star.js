@@ -12,6 +12,7 @@ import { Instance } from "@react-three/drei";
 import { sliderTypes } from "../../../UIComponents/components/SliderTypePicker";
 import * as THREE from "three";
 import { setNewStarZoom } from "../../actions";
+import { useEffect } from "react";
 
 const filterTemperature = (temperature, temperatureFilterType, temperatureFilterValue) => {
   if (temperatureFilterType == sliderTypes.activated) {
@@ -49,8 +50,14 @@ export const Star = ({ star, massCenter, canClickRef, isDraggingRef }) => {
     return cartesianCoordinatesToRenderCoordinates(star.x, star.y, star.z, massCenter);
   }, [star, massCenter]);
 
-  useFrame(({ clock }) => {
-    starRef.current.rotation.y = startRotation + clock.getElapsedTime() / 4;
+  useEffect(() => {
+    if (starRef.current) {
+      starRef.current.rotation.y = startRotation;
+    }
+  }, [starRef]);
+
+  useFrame(() => {
+    starRef.current.rotation.y += 0.0015;
     if (starYear.current != yearRef.current) {
       starYear.current = yearRef.current;
       const newCoords = applySpaceMotion(star.x, star.y, star.z, star.PMRA, star.PMDEC, star.vRad, yearRef.current);

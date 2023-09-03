@@ -1,8 +1,6 @@
 import { EffectComposer, Selection, Bloom } from "@react-three/postprocessing";
 import { KernelSize } from "postprocessing";
 import React, { memo, useRef, useEffect, Suspense } from "react";
-import { calculateMassCenter, cartesianCoordinatesToRenderCoordinates } from "../../utils/physicsFunctions";
-import { StarModel } from "./3DModels/StarModel";
 import { useSelector } from "react-redux";
 import { getStarZoom } from "../selectors";
 import { AllStarsModels } from "./3DModels/AllStarsModels";

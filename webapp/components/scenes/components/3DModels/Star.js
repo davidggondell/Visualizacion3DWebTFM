@@ -45,11 +45,6 @@ export const Star = ({ star, massCenter, canClickRef, isDraggingRef }) => {
   const starSize = useMemo(() => getStarSize(star.Radius), [star]);
   const starTemp = useMemo(() => 10 ** star.temp_i, [star]);
   const startRotation = useMemo(() => Math.random() * Math.PI, []);
-  if (star && massCenter) {
-    console.log("Buena");
-  } else {
-    console.log("Mala", star, massCenter);
-  }
   const starPosition = useMemo(() => {
     return cartesianCoordinatesToRenderCoordinates(star.x, star.y, star.z, massCenter);
   }, [star, massCenter]);
@@ -58,33 +53,27 @@ export const Star = ({ star, massCenter, canClickRef, isDraggingRef }) => {
     starRef.current.rotation.y = startRotation + clock.getElapsedTime() / 4;
     if (starYear.current != yearRef.current) {
       starYear.current = yearRef.current;
-      const newCoords = applySpaceMotion(
-        star.x,
-        star.y,
-        star.z,
-        star.pm_ra,
-        star.pm_dec,
-        star.radial_velocity,
-        yearRef.current,
-      );
+      const newCoords = applySpaceMotion(star.x, star.y, star.z, star.PMRA, star.PMDEC, star.vRad, yearRef.current);
+
       const newCoordsRender = cartesianCoordinatesToRenderCoordinates(
         newCoords.x,
         newCoords.y,
         newCoords.z,
         massCenter,
       );
+
       starRef.current.position.x = newCoordsRender.x;
       starRef.current.position.y = newCoordsRender.y;
       starRef.current.position.z = newCoordsRender.z;
     }
   });
-  console.log(star.Radius);
+
   return (
     <group>
       <Instance
         ref={starRef}
         position={[starPosition.x, starPosition.y, starPosition.z]}
-        scale={star.Radius}
+        scale={starSize}
         visible={
           !filterTemperature(starTemp, temperatureFilter.type, temperatureFilter.value) &&
           !filterMass(star.mass_i, massFilter.type, massFilter.value)

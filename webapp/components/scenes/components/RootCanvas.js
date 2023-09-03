@@ -37,7 +37,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
       }}
     >
       <Canvas ref={canvasRef} dpr={dpr}>
-        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(0.5)} />
+        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
         <UseReduxProgress />
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />

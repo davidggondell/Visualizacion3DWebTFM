@@ -43,13 +43,13 @@ const separateStarsInClasses = (stars) => {
 };
 
 export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
-  const sol = useGLTF("/MiEstrella.gltf");
-  const roja = useGLTF("/EstrellaRoja.gltf");
-  const naranja = useGLTF("/EstrellaNaranja.gltf");
-  const blanca = useGLTF("/EstrellaBlanca.gltf");
-  const azulClara = useGLTF("/EstrellaAzulClara.gltf");
-  const azul = useGLTF("/EstrellaAzul.gltf");
-  const amarillaClara = useGLTF("/EstrellaAmarillaClara.gltf");
+  const sol = useGLTF("/MiEstrella.glb");
+  const roja = useGLTF("/EstrellaRoja.glb");
+  const naranja = useGLTF("/EstrellaNaranja.glb");
+  const blanca = useGLTF("/EstrellaBlanca.glb");
+  const azulClara = useGLTF("/EstrellaAzulClara.glb");
+  const azul = useGLTF("/EstrellaAzul.glb");
+  const amarillaClara = useGLTF("/EstrellaAmarillaClara.glb");
   const classOActive = useSelector(getClassOActive);
   const classBActive = useSelector(getClassBActive);
   const classAActive = useSelector(getClassAActive);
@@ -57,8 +57,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
   const classGActive = useSelector(getClassGActive);
   const classKActive = useSelector(getClassKActive);
   const classMActive = useSelector(getClassMActive);
-  var classOMaterial = azul.materials.MaterialBaked;
-  classOMaterial.toneMapped = false;
   const allActive = useMemo(
     () =>
       !classOActive &&
@@ -75,9 +73,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
     [stars],
   );
   const massCenter = useMemo(() => calculateMassCenter(stars), [stars]);
-  console.log(massCenter);
-  if (!massCenter) return null;
-  console.log({ classOStars, classBStars, classAStars, classFStars, classGStars, classKStars, classMStars });
 
   return (
     <>
@@ -85,10 +80,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         stars={classOStars}
         massCenter={massCenter}
         geometry={azul.nodes.EsferaBaked.geometry}
-        material={classOMaterial}
-        emissive="cyan"
-        emissiveIntensity={1}
-        toneMapped={true}
+        material={azul.materials.MaterialBaked}
         active={allActive || classOActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -98,9 +90,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={azulClara.nodes.EsferaBaked.geometry}
         material={azulClara.materials.MaterialBaked}
-        emissive="cyan"
-        emissiveIntensity={0.1}
-        toneMapped={false}
         active={allActive || classBActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -110,9 +99,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={blanca.nodes.EsferaBaked.geometry}
         material={blanca.materials.MaterialBaked}
-        emissive="#bbffff"
-        emissiveIntensity={0.2}
-        toneMapped={false}
         active={allActive || classAActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -122,9 +108,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={amarillaClara.nodes.EsferaBaked.geometry}
         material={amarillaClara.materials.MaterialBaked}
-        emissive="white"
-        emissiveIntensity={0.5}
-        toneMapped={true}
         active={allActive || classFActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -134,9 +117,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={sol.nodes.EsferaBaked.geometry}
         material={sol.materials.MaterialBAKED}
-        emissive="white"
-        emissiveIntensity={0.5}
-        toneMapped={true}
         active={allActive || classGActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -146,9 +126,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={naranja.nodes.EsferaBaked.geometry}
         material={naranja.materials.MaterialBaked}
-        emissive="grey"
-        emissiveIntensity={2.8}
-        toneMapped={true}
         active={allActive || classKActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -158,9 +135,6 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
         massCenter={massCenter}
         geometry={roja.nodes.EsferaBaked.geometry}
         material={roja.materials.MaterialBaked}
-        emissive="red"
-        emissiveIntensity={2}
-        toneMapped={true}
         active={allActive || classMActive}
         canClickRef={canClickRef}
         isDraggingRef={isDraggingRef}
@@ -169,10 +143,10 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
   );
 };
 
-useGLTF.preload("/MiEstrella.gltf");
-useGLTF.preload("/EstrellaRoja.gltf");
-useGLTF.preload("/EstrellaNaranja.gltf");
-useGLTF.preload("/EstrellaBlanca.gltf");
-useGLTF.preload("/EstrellaAzulClara.gltf");
-useGLTF.preload("/EstrellaAzul.gltf");
-useGLTF.preload("/EstrellaAmarillaClara.gltf");
+useGLTF.preload("/MiEstrella.glb");
+useGLTF.preload("/EstrellaRoja.glb");
+useGLTF.preload("/EstrellaNaranja.glb");
+useGLTF.preload("/EstrellaBlanca.glb");
+useGLTF.preload("/EstrellaAzulClara.glb");
+useGLTF.preload("/EstrellaAzul.glb");
+useGLTF.preload("/EstrellaAmarillaClara.glb");

@@ -69,6 +69,9 @@ export const calculateMassCenter = (starCluster) => {
 export const kmInParsec = 3.08567758128e13;
 
 export const applySpaceMotion = (x, y, z, pm_ra, pm_dec, radialVelocity, timePassed) => {
+  if (pm_ra == undefined || pm_ra == null || pm_dec == undefined || pm_dec == null) {
+    return { x, y, z };
+  }
   const radialVelocityExistent = radialVelocity ? radialVelocity : 0;
   // Calcular desplazamiento angular debido al movimiento propio
   const deltaRA = (pm_ra * timePassed) / 3600000; // Convertir mas/año a grados

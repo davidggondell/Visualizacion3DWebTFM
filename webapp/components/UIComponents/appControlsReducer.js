@@ -15,11 +15,11 @@ const initialState = {
   classKActive: false,
   classMActive: false,
   temperatureFilter: {
-    value: [0, 10],
+    value: [0, 40000],
     type: sliderTypes.disabled,
   },
   massFilter: {
-    value: [0, 10],
+    value: [0, 30],
     type: sliderTypes.disabled,
   },
 };

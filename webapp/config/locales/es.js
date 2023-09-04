@@ -62,6 +62,10 @@ export default {
   "starDetails.radius": "Radio: {radius} R☉",
   "starDetails.temperature": "Temperatura: {temperature} K",
 
+  "myClusters.instructions":
+    "En esta sección pueden subirse ficheros CSV de cúmulos personalizados para que se muestren en la aplicación. Estos ficheros se guardan en el almacenamiento del navegador, por lo que el espacio es limitado. No se asegura un rendimiento óptimo para ficheros con datos de más de 1500 estrellas, especialmente en dispositivos con baja capacidad de cómputo.",
+  "myClusters.validFile":
+    "Para que un fichero sea válido, este debe tener los siguientes datos respetando mayúsculas: ID, mass_i (masas solares de la estrella), temp_i (Logaritmo de la temperatura en Kelvin de la estrella), Radio (Radios solares de la estrella), x, y, z (coordenadas cartesianas de la estrella medidas en pársecs). Además adicionalmente podrán añadirse PMRA (movimiento Propio en Ascensión Recta en mas/año), PMDEC (movimiento Propio en Declinación en mas/año) y velocidad radial (km/s) para poder utilizar los controles de tiempo.",
   "myClusters.uploadFile": "Subir fichero CSV",
   "myClusters.uploadFile.invalidType": "El fichero no es un fichero CSV",
   "myClusters.uploadFile.success": "Fichero añadido correctamente",

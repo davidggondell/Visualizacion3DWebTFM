@@ -47,6 +47,8 @@ import {
   setNewTemperatureFilter,
   setNewClassBActive,
 } from "../actions";
+import { useMemo } from "react";
+import { getActiveCluster } from "../../scenes/selectors";
 
 const StarClassCheckBox = ({ value, onChange, starClass }) => {
   return (
@@ -81,7 +83,16 @@ const StarClassCheckBox = ({ value, onChange, starClass }) => {
   );
 };
 
-const ChangeCommittedSlider = ({ defaultValue, min, max, track, disabled, valueLabelFormat, onChangeCommitted }) => {
+const ChangeCommittedSlider = ({
+  defaultValue,
+  min,
+  max,
+  track,
+  step,
+  disabled,
+  valueLabelFormat,
+  onChangeCommitted,
+}) => {
   const [value, setValue] = useState(defaultValue);
 
   return (
@@ -92,6 +103,7 @@ const ChangeCommittedSlider = ({ defaultValue, min, max, track, disabled, valueL
       valueLabelDisplay="auto"
       min={min}
       max={max}
+      step={step}
       track={track}
       disabled={disabled}
       valueLabelFormat={valueLabelFormat}
@@ -131,6 +143,26 @@ export const FiltersModal = () => {
   const massFilter = useSelector(getMassFilter);
   const { width, height } = useWindowDimensions(0.8);
   const theme = createTheme(themeValues);
+  const activeCluster = useSelector(getActiveCluster);
+  const maxTemp = useMemo(() => {
+    const red = activeCluster?.reduce((max, star) => {
+      const temp = 10 ** star.temp_i;
+      return temp > max ? temp : max;
+    }, 0);
+    return red ? red : 40000;
+  }, [activeCluster]);
+  const maxMass = useMemo(() => {
+    const red = activeCluster?.reduce((max, star) => {
+      const mass = star.mass_i;
+      return mass > max ? mass : max;
+    }, 0);
+    return red ? red : 30;
+  }, [activeCluster]);
+
+  useEffect(() => {
+    setNewTemperatureFilter(dispatch, [0, maxTemp], sliderTypes.disabled);
+    setNewMassFilter(dispatch, [0, maxMass], sliderTypes.disabled);
+  }, [maxTemp, maxMass]);
 
   useEffect(() => {
     setTimeout(() => setActivate(filtersModalOpened), 200);
@@ -270,10 +302,10 @@ export const FiltersModal = () => {
                             }
                             valueLabelDisplay="auto"
                             min={0}
-                            max={40000}
+                            max={maxTemp}
                             track={temperatureFilter.type == sliderTypes.inverted ? "inverted" : "normal"}
                             disabled={temperatureFilter.type == sliderTypes.disabled}
-                            valueLabelFormat={(value) => `${value} K`}
+                            valueLabelFormat={(value) => `${value.toFixed(2)} K`}
                           />
                         </div>
                       </Stack>
@@ -294,10 +326,11 @@ export const FiltersModal = () => {
                             onChangeCommitted={(value) => setNewMassFilter(dispatch, value, massFilter.type)}
                             valueLabelDisplay="auto"
                             min={0}
-                            max={50}
+                            max={maxMass}
+                            step={0.01}
                             track={massFilter.type == sliderTypes.inverted ? "inverted" : "normal"}
                             disabled={massFilter.type == sliderTypes.disabled}
-                            valueLabelFormat={(value) => `${value} Ms`}
+                            valueLabelFormat={(value) => `${value.toFixed(2)} Ms`}
                           />
                         </div>
                       </Stack>
@@ -314,8 +347,8 @@ export const FiltersModal = () => {
                             setNewClassGActive(dispatch, true);
                             setNewClassKActive(dispatch, true);
                             setNewClassMActive(dispatch, true);
-                            setNewTemperatureFilter(dispatch, [0, 10], sliderTypes.disabled);
-                            setNewMassFilter(dispatch, [0, 10], sliderTypes.disabled);
+                            setNewTemperatureFilter(dispatch, [0, maxTemp], sliderTypes.disabled);
+                            setNewMassFilter(dispatch, [0, maxMass], sliderTypes.disabled);
                           }}
                         >
                           <FormattedMessage id="filtersModal.reset" />

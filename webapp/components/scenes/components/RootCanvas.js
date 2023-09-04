@@ -1,4 +1,4 @@
-import { AdaptiveDpr, PerformanceMonitor, PerspectiveCamera, Stats } from "@react-three/drei";
+import { PerformanceMonitor, PerspectiveCamera, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useRef, useEffect, useState } from "react";
 import { CameraController } from "../../sceneObjects/CameraController";
@@ -49,7 +49,7 @@ export const RootCanvas = ({ cameraControllerRef }) => {
         <UseReduxProgress />
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />
-        <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={25000} />
+        <PerspectiveCamera makeDefault position={[0, 0, 3000]} far={100000} />
         <Stats />
         <StarClusterScene starCluster={activeCluster} />
       </Canvas>

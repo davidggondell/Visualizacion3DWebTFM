@@ -35,6 +35,12 @@ export const TimeControls = () => {
   const { width } = useWindowDimensions(0.7);
 
   useEffect(() => {
+    if (speedValueRef) {
+      speedValueRef.current = 0;
+    }
+    if (yearRef && setYearValueCallback?.current) {
+      setYearValueCallback.current(yearRef.current);
+    }
     const interval = setInterval(() => {
       if (setYearValueCallback.current) {
         setYearValueCallback.current(yearRef.current);
@@ -51,6 +57,7 @@ export const TimeControls = () => {
   }, [timeControlsOpened, starZoom]);
 
   const onClose = useCallback(() => {
+    speedValueRef.current = 0;
     setSlideOpened(false);
     setTimeout(() => closeTimeControls(dispatch), 200);
   }, []);

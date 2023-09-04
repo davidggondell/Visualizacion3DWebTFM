@@ -22,12 +22,14 @@
     "@mui/material": "^5.14.0",
     "@react-spring/web": "^9.5.5",
     "@react-three/cannon": "^6.4.0",
-    "@react-three/drei": "^9.78.2",
-    "@react-three/fiber": "^8.2.2",
-    "@react-three/postprocessing": "^2.6.2",
+    "@react-three/drei": "^9.80.9",
+    "@react-three/fiber": "^8.13.7",
+    "@react-three/postprocessing": "^2.15.1",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/three": "^0.155.1",
     "@use-gesture/react": "^10.2.20",
     "animejs": "^3.2.1",
+    "bignumber.js": "^9.1.2",
     "csv": "^6.2.0",
     "fflate": "^0.8.0",
     "gltfjsx": "^5.0.2",
@@ -41,11 +43,12 @@
     "polished": "^4.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
     "react-intl": "^6.4.4",
     "react-no-ssr": "^1.1.0",
-    "react-postprocessing": "^1.4.0",
     "react-redux": "^8.1.1",
-    "three": "^0.143.0"
+    "three": "^0.156.0",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {}
 }

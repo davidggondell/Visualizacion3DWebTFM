@@ -9,6 +9,7 @@ import {
   setClassMActive,
   setClassOActive,
   setFiltersModalOpened,
+  setInstructionsOpened,
   setMassFilter,
   setSidebarOpened,
   setTemperatureFilter,
@@ -65,6 +66,20 @@ export const closeAllControls = (dispatch) => {
     dispatch(setTimeControlsOpened(false));
     dispatch(setCameraControlsOpened(false));
   });
+};
+
+export const openInstructions = (dispatch) => {
+  batch(() => {
+    dispatch(setSidebarOpened(false));
+    dispatch(setFiltersModalOpened(false));
+    dispatch(setTimeControlsOpened(false));
+    dispatch(setCameraControlsOpened(false));
+    dispatch(setInstructionsOpened(true));
+  });
+};
+
+export const closeInstructions = (dispatch) => {
+  dispatch(setInstructionsOpened(false));
 };
 
 export const setNewClassOActive = (dispatch, active) => {

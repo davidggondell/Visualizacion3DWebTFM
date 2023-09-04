@@ -6,6 +6,7 @@ const initialState = {
   timeControlsOpened: false,
   cameraControlsOpened: false,
   filtersModalOpened: false,
+  instructionsOpened: false,
   classOActive: false,
   classBActive: false,
   classAActive: false,
@@ -14,11 +15,11 @@ const initialState = {
   classKActive: false,
   classMActive: false,
   temperatureFilter: {
-    value: [0, 10],
+    value: [0, 40000],
     type: sliderTypes.disabled,
   },
   massFilter: {
-    value: [0, 10],
+    value: [0, 30],
     type: sliderTypes.disabled,
   },
 };
@@ -38,6 +39,9 @@ export const appControlsReducer = createSlice({
     },
     setFiltersModalOpened: (state, action) => {
       state.filtersModalOpened = action.payload;
+    },
+    setInstructionsOpened: (state, action) => {
+      state.instructionsOpened = action.payload;
     },
     setClassOActive: (state, action) => {
       state.classOActive = action.payload;
@@ -74,6 +78,7 @@ export const {
   setTimeControlsOpened,
   setCameraControlsOpened,
   setFiltersModalOpened,
+  setInstructionsOpened,
   setClassOActive,
   setClassBActive,
   setClassAActive,

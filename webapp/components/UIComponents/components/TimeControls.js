@@ -11,14 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTimeControlsOpened } from "../selectors";
 import { closeTimeControls } from "../actions";
 import { getStarZoom } from "../../scenes/selectors";
+import { RootUIContext } from "../RootUIContext";
 
-const TimeSpeedNumber = ({ callBackRef }) => {
+const RefUpdatedNumber = ({ callBackRef }) => {
   const [value, setValue] = useState(0);
   useEffect(() => {
     callBackRef.current = (newValue) => setValue(newValue);
   }, [callBackRef]);
 
-  return <Typography>{value}</Typography>;
+  return <Typography>{value > 0 ? `+${value}` : value}</Typography>;
 };
 
 export const TimeControls = () => {
@@ -27,14 +28,36 @@ export const TimeControls = () => {
   const timeControlsOpened = useSelector(getTimeControlsOpened);
   const starZoom = useSelector(getStarZoom);
   const [slideOpened, setSlideOpened] = useState(timeControlsOpened);
+  const setYearValueCallback = useRef(null);
   const setSpeedValueCallBack = useRef(null);
+  const speedValueRef = useRef(0);
+  const { yearRef } = useContext(RootUIContext);
   const { width } = useWindowDimensions(0.7);
+
+  useEffect(() => {
+    if (speedValueRef) {
+      speedValueRef.current = 0;
+    }
+    if (yearRef && setYearValueCallback?.current) {
+      setYearValueCallback.current(yearRef.current);
+    }
+    const interval = setInterval(() => {
+      if (setYearValueCallback.current) {
+        setYearValueCallback.current(yearRef.current);
+      }
+      if (speedValueRef.current && speedValueRef.current != 0) {
+        yearRef.current += speedValueRef.current;
+      }
+    }, 1);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => setSlideOpened(timeControlsOpened && !starZoom), 200);
   }, [timeControlsOpened, starZoom]);
 
   const onClose = useCallback(() => {
+    speedValueRef.current = 0;
     setSlideOpened(false);
     setTimeout(() => closeTimeControls(dispatch), 200);
   }, []);
@@ -113,9 +136,9 @@ export const TimeControls = () => {
                   >
                     <div style={{ width: "90%" }}>
                       <Slider
-                        disabled
                         defaultValue={0}
                         onChange={(_, newValue) => {
+                          speedValueRef.current = newValue;
                           if (setSpeedValueCallBack.current) {
                             setSpeedValueCallBack.current(newValue);
                           }
@@ -135,16 +158,14 @@ export const TimeControls = () => {
                   </Stack>
                   <Stack sx={{ width: "100%" }} direction="row" justifyContent="space-between">
                     <Stack direction="row" spacing={1}>
+                      <RefUpdatedNumber callBackRef={setYearValueCallback} />
                       <Typography>
-                        <FormattedMessage id="timeControls.year" />
+                        <FormattedMessage id="timeControls.years" />
                       </Typography>
-                      <Typography>{2023}</Typography>
                     </Stack>
                     <Stack direction="row" spacing={1}>
-                      <TimeSpeedNumber callBackRef={setSpeedValueCallBack} />
-                      <Typography>
-                        <FormattedMessage id="timeControls.speed" />
-                      </Typography>
+                      <RefUpdatedNumber callBackRef={setSpeedValueCallBack} />
+                      <Typography>%</Typography>
                     </Stack>
                   </Stack>
                 </div>

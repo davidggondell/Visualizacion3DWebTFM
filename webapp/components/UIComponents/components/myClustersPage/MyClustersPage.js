@@ -141,17 +141,30 @@ const ClusterItem = memo(({ id, name, cluster, openDelete, openError, setBackdro
   );
 });
 
-const MyClustersPageHeader = memo(({ loading, handleFileChange, items }) => {
+const MyClustersPageHeader = memo(({ loading, handleFileChange }) => {
   return (
-    <Stack sx={{ paddingBottom: 1, paddingX: 1 }} direction="row" alignItems="flex-end" justifyContent="space-between">
-      <Typography>{(getLocalStorageUsage() / (1024 * 1024)).toFixed(3)}</Typography>
+    <Stack sx={{ paddingBottom: 1 }} gap={2} alignItems="center">
+      <Typography sx={{ textAlign: "center" }}>
+        <FormattedMessage id="myClusters.instructions" />
+      </Typography>
+      <Typography sx={{ textAlign: "center" }}>
+        <FormattedMessage id="myClusters.validFile" />
+      </Typography>
+      <Stack sx={{ paddingX: 1, width: "100%" }} direction="row" alignItems="flex-end" justifyContent="space-between">
+        <Typography>{(getLocalStorageUsage() / (1024 * 1024)).toFixed(3)}</Typography>
 
-      <LoadingButton color="secondary" variant="contained" component="label" loading={loading}>
-        <FormattedMessage id="myClusters.uploadFile" />
-        {!loading && (
-          <input accept=".csv" type="file" style={{ display: "none" }} onChange={(event) => handleFileChange(event)} />
-        )}
-      </LoadingButton>
+        <LoadingButton color="secondary" variant="contained" component="label" loading={loading}>
+          <FormattedMessage id="myClusters.uploadFile" />
+          {!loading && (
+            <input
+              accept=".csv"
+              type="file"
+              style={{ display: "none" }}
+              onChange={(event) => handleFileChange(event)}
+            />
+          )}
+        </LoadingButton>
+      </Stack>
     </Stack>
   );
 });
@@ -222,7 +235,17 @@ export const MyClustersPage = () => {
       >
         <ArrowBackRoundedIcon fontSize="inherit" />
       </IconButton>
-      <Box sx={{ height: height + 42, width: "100%", maxWidth: 800 }}>
+      <Box
+        sx={{
+          height: "100%",
+          width: "100%",
+          maxWidth: 800,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
         <MyClustersPageHeader loading={loading} handleFileChange={(event) => handleFileChange(event)} items={items} />
         <ArwesThemeProvider>
           <StylesBaseline />

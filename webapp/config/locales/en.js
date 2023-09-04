@@ -46,7 +46,7 @@ export default {
 
   "timeControls.rewind": "Rewind",
   "timeControls.forward": "Forward",
-  "timeControls.year": "Year:",
+  "timeControls.yearz": "years",
   "timeControls.speed": "years/s",
 
   "cameraControls.orbit": "Orbit",
@@ -62,6 +62,10 @@ export default {
   "starDetails.radius": "Radius {radius} R☉",
   "starDetails.temperature": "Temperature: {temperature} K",
 
+  "myClusters.instructions":
+    "In this section, you can upload CSV files of custom clusters to be displayed in the application. These files are stored in the browser's storage, so space is limited. Optimal performance is not guaranteed for files with data of more than 1500 stars, especially on devices with low computing capacity.",
+  "myClusters.validFile":
+    "For a file to be valid, it must have the following data while respecting capitalization: ID, mass_i (stellar masses in solar masses), temp_i (Logarithm of the temperature in Kelvin of the star), Radius (stellar radii in solar radii), x, y, z (cartesian coordinates of the star measured in parsecs). Additionally, you can also include PMRA (Proper Motion in Right Ascension in mas/year), PMDEC (Proper Motion in Declination in mas/year), and radial velocity (km/s) to be able to use the time controls.",
   "myClusters.uploadFile": "Upload CSV",
   "myClusters.uploadFile.invalidType": "Uploaded file is not a CSV file",
   "myClusters.uploadFile.success": "File uploaded correctly",
@@ -78,4 +82,11 @@ export default {
   "myClusters.play.errorDecompressing": "Error descompressing file",
   "myClusters.play.errorParsing": "Error parsing file",
   "myClusters.play.errorValidating": "CSV file does not have necessary field or there are some incorrect",
+
+  "instructions.title": "Instrutions",
+  "instructions.keyboard": "Keyboard and mouse",
+  "instructions.keyboard.camera": "",
+  "instructions.keyboard.zoom": "",
+  "instructions.keyboard.move": "",
+  "instructions.touch": "Touch screen",
 };

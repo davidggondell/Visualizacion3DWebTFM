@@ -9,6 +9,7 @@ import { useThree } from "@react-three/fiber";
 import { closeStarZoom } from "../scenes/actions";
 import * as THREE from "three";
 import { useMediaQuery, useTheme } from "@mui/material";
+import { getFiltersModalOpened, getInstructionsOpened } from "../UIComponents/selectors";
 
 const DetailsCamera = ({ starZoom }) => {
   const dispatch = useDispatch();
@@ -87,19 +88,25 @@ const DetailsCamera = ({ starZoom }) => {
 export const CameraController = () => {
   const enabled = useSelector(getPlayerControlsEnabled);
   const starZoom = useSelector(getStarZoom);
+  const instructionsOpened = useSelector(getInstructionsOpened);
+  const filtersModalOpened = useSelector(getFiltersModalOpened);
 
   return (
     <>
-      {starZoom ? (
-        <DetailsCamera starZoom={starZoom} />
-      ) : (
+      {!instructionsOpened && !filtersModalOpened && (
         <>
-          {enabled ? (
-            <Physics>
-              <Player enabled={enabled} />
-            </Physics>
+          {starZoom ? (
+            <DetailsCamera starZoom={starZoom} />
           ) : (
-            <OrbitControls enablePan={false} />
+            <>
+              {enabled ? (
+                <Physics>
+                  <Player enabled={enabled} />
+                </Physics>
+              ) : (
+                <OrbitControls enablePan={false} />
+              )}
+            </>
           )}
         </>
       )}

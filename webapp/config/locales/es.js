@@ -46,7 +46,7 @@ export default {
 
   "timeControls.rewind": "Retroceder",
   "timeControls.forward": "Avanzar",
-  "timeControls.year": "Año:",
+  "timeControls.years": "años",
   "timeControls.speed": "años/s",
 
   "cameraControls.orbit": "Órbita",
@@ -62,6 +62,10 @@ export default {
   "starDetails.radius": "Radio: {radius} R☉",
   "starDetails.temperature": "Temperatura: {temperature} K",
 
+  "myClusters.instructions":
+    "En esta sección pueden subirse ficheros CSV de cúmulos personalizados para que se muestren en la aplicación. Estos ficheros se guardan en el almacenamiento del navegador, por lo que el espacio es limitado. No se asegura un rendimiento óptimo para ficheros con datos de más de 1500 estrellas, especialmente en dispositivos con baja capacidad de cómputo.",
+  "myClusters.validFile":
+    "Para que un fichero sea válido, este debe tener los siguientes datos respetando mayúsculas: ID, mass_i (masas solares de la estrella), temp_i (Logaritmo de la temperatura en Kelvin de la estrella), Radio (Radios solares de la estrella), x, y, z (coordenadas cartesianas de la estrella medidas en pársecs). Además adicionalmente podrán añadirse PMRA (movimiento Propio en Ascensión Recta en mas/año), PMDEC (movimiento Propio en Declinación en mas/año) y velocidad radial (km/s) para poder utilizar los controles de tiempo.",
   "myClusters.uploadFile": "Subir fichero CSV",
   "myClusters.uploadFile.invalidType": "El fichero no es un fichero CSV",
   "myClusters.uploadFile.success": "Fichero añadido correctamente",
@@ -78,4 +82,26 @@ export default {
   "myClusters.play.errorDecompressing": "Error descomprimiendo el fichero",
   "myClusters.play.errorParsing": "Error parseando el fichero",
   "myClusters.play.errorValidating": "El fichero CSV no tiene los campos necesarios o hay alguno incorrecto",
+
+  "instructions.title": "Instrucciones",
+  "instructions.basic.title": "Instrucciones básicas",
+  "instructions.basic.modes": "La aplicación cuenta con dos modos para ver las estrellas:",
+  "instructions.basic.modes.orbit": "La cámara se mueve orbitando el centro de masas del cúmulo",
+  "instructions.basic.modes.firstPerson": "En este modo se puede mirar a cualquier dirección y moverse libremente",
+  "instructions.basic.modes.choose":
+    "Se puede <b>cambiar entre distintos modos</b> mediante los <b>controles de cámara</b> dentro de la aplicación disponibles en el <b>menu lateral</b>",
+  "instructions.keyboard": "Teclado y ratón",
+  "instructions.keyboard.camera":
+    "Para <b>mover la cámara</b> se utilizan el botón izquierdo del raton, pulsando y arrastrando",
+  "instructions.keyboard.zoom": "El <b>zoom</b> de la cámara se controla mediante la rueda del ratón",
+  "instructions.keyboard.click": "Al hacer <b>clic</b> en una estrella se mostrarán los detalles de la misma",
+  "instructions.keyboard.move":
+    "En el modo de primera persona el <b>desplazamiento por el espacio</b> se realiza mediante las teclas <b>W, A, S y D</b>",
+  "instructions.touch": "Pantalla táctil",
+  "instructions.touch.camera": "La <b>camara</b> se moverá deslizando el dedo por la pantalla",
+  "instructions.touch.zoom":
+    "El <b>zoom</b> y el <b>desplazamiento por el espacio</b> se realizan pellizcando la pantalla con dos dedos",
+  "instructions.touch.touch":
+    "Al <b>tocar</b> en una estrella se mostrarán los detalles de la misma. En dispositivos táctiles es necesario estar cerca de la estrela para que se muestren los detalles",
+  "instructions.controls": "Controles",
 };

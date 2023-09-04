@@ -11,7 +11,6 @@ import { getCameraControlsOpened } from "../selectors";
 import { closeCameraControls } from "../actions";
 import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
 import { getStarZoom } from "../../scenes/selectors";
-//import { setOrbitControls, setPlayerControls } from "../../scenes/actions";
 
 const FullWidthDiv = ({ fullWidth }) => {
   const themeValues = useTheme();

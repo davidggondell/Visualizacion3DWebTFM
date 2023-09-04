@@ -12,6 +12,9 @@ import {
   getClassOActive,
 } from "../../../UIComponents/selectors";
 import { StarInstances } from "./StarInstances";
+import * as THREE from "three";
+import { RootCanvasContext } from "../../RootCanvasContext";
+import { useContext } from "react";
 
 const separateStarsInClasses = (stars) => {
   const classOStars = [];
@@ -42,7 +45,10 @@ const separateStarsInClasses = (stars) => {
   return { classOStars, classBStars, classAStars, classFStars, classGStars, classKStars, classMStars };
 };
 
+const sphereGeometry = new THREE.SphereGeometry(1, 12, 12);
+
 export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
+  const { lowPerformance } = useContext(RootCanvasContext);
   const sol = useGLTF("/MiEstrella.glb");
   const roja = useGLTF("/EstrellaRoja.glb");
   const naranja = useGLTF("/EstrellaNaranja.glb");
@@ -79,7 +85,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classOStars}
         massCenter={massCenter}
-        geometry={azul.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : azul.nodes.EsferaBaked.geometry}
         material={azul.materials.MaterialBaked}
         active={allActive || classOActive}
         canClickRef={canClickRef}
@@ -88,7 +94,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classBStars}
         massCenter={massCenter}
-        geometry={azulClara.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : azulClara.nodes.EsferaBaked.geometry}
         material={azulClara.materials.MaterialBaked}
         active={allActive || classBActive}
         canClickRef={canClickRef}
@@ -97,7 +103,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classAStars}
         massCenter={massCenter}
-        geometry={blanca.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : blanca.nodes.EsferaBaked.geometry}
         material={blanca.materials.MaterialBaked}
         active={allActive || classAActive}
         canClickRef={canClickRef}
@@ -106,7 +112,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classFStars}
         massCenter={massCenter}
-        geometry={amarillaClara.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : amarillaClara.nodes.EsferaBaked.geometry}
         material={amarillaClara.materials.MaterialBaked}
         active={allActive || classFActive}
         canClickRef={canClickRef}
@@ -115,7 +121,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classGStars}
         massCenter={massCenter}
-        geometry={sol.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : sol.nodes.EsferaBaked.geometry}
         material={sol.materials.MaterialBAKED}
         active={allActive || classGActive}
         canClickRef={canClickRef}
@@ -124,7 +130,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classKStars}
         massCenter={massCenter}
-        geometry={naranja.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : naranja.nodes.EsferaBaked.geometry}
         material={naranja.materials.MaterialBaked}
         active={allActive || classKActive}
         canClickRef={canClickRef}
@@ -133,7 +139,7 @@ export const AllStarsModels = ({ stars, canClickRef, isDraggingRef }) => {
       <StarInstances
         stars={classMStars}
         massCenter={massCenter}
-        geometry={roja.nodes.EsferaBaked.geometry}
+        geometry={lowPerformance ? sphereGeometry : roja.nodes.EsferaBaked.geometry}
         material={roja.materials.MaterialBaked}
         active={allActive || classMActive}
         canClickRef={canClickRef}

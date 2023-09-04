@@ -10,6 +10,7 @@ import { UseReduxProgress } from "../../hooks/useReduxProgress";
 
 export const RootCanvas = ({ cameraControllerRef }) => {
   const [dpr, setDpr] = useState(1.5);
+  const [lowPerformance, setLowPerformance] = useState(false);
   const ambientLight = useRef(null);
   const canvasRef = useRef(null);
   const activeCluster = useSelector(getActiveCluster);
@@ -34,10 +35,17 @@ export const RootCanvas = ({ cameraControllerRef }) => {
     <RootCanvasContext.Provider
       value={{
         canvasRef: canvasRef,
+        lowPerformance: lowPerformance,
       }}
     >
       <Canvas ref={canvasRef} dpr={dpr}>
-        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
+        <PerformanceMonitor
+          onIncline={() => setDpr(2)}
+          onDecline={() => {
+            setDpr(1);
+            setLowPerformance(true);
+          }}
+        />
         <UseReduxProgress />
         <CameraController ref={cameraControllerRef} />
         <ambientLight intensity={0.4} ref={ambientLight} />

@@ -48,6 +48,7 @@ export default {
   "timeControls.forward": "Forward",
   "timeControls.yearz": "years",
   "timeControls.speed": "years/s",
+  "timeControls.reset": "Reset",
 
   "cameraControls.orbit": "Orbit",
   "cameraControls.firstPerson": "First person",

@@ -48,6 +48,7 @@ export default {
   "timeControls.forward": "Avanzar",
   "timeControls.years": "años",
   "timeControls.speed": "años/s",
+  "timeControls.reset": "Reiniciar",
 
   "cameraControls.orbit": "Órbita",
   "cameraControls.firstPerson": "Primera persona",

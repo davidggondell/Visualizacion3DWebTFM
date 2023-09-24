@@ -223,7 +223,7 @@ export const MyClustersPage = () => {
 
   return (
     <Stack
-      sx={{ height: "100%", width: "100%", backgroundColor: theme.palette.background.default }}
+      sx={{ minHeight: "100%", width: "100%", backgroundColor: theme.palette.background.default }}
       alignItems="center"
       justifyContent="center"
     >
@@ -237,7 +237,7 @@ export const MyClustersPage = () => {
       </IconButton>
       <Box
         sx={{
-          height: "100%",
+          minHeight: "100%",
           width: "100%",
           maxWidth: 800,
           display: "flex",

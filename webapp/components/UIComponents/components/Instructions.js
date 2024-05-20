@@ -125,7 +125,7 @@ const InstructionsModal = ({ open, onClose }) => {
                       <ArwesThemeProvider>
                         <Text>
                           <ThemeProvider theme={theme}>
-                            <Stack sx={{ width: "100%", padding: "16px" }} spacing={1}>
+                            <Stack sx={{ width: "100%", padding: "16px" }} spacing={3}>
                               <Typography variant="h6">
                                 <FormattedMessage id="instructions.basic.title" />
                               </Typography>
@@ -133,7 +133,7 @@ const InstructionsModal = ({ open, onClose }) => {
                               <Typography>
                                 <FormattedMessage id="instructions.basic.modes" />
                               </Typography>
-                              <Stack direction="row" justifyContent="space-around">
+                              <Stack direction="row" justifyContent="space-around" spacing={2}>
                                 <Stack alignItems="center" justifyContent="center" spacing="4px">
                                   <Stack direction="row" spacing={1}>
                                     <AutoModeIcon />

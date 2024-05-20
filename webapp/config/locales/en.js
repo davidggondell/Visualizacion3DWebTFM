@@ -84,10 +84,24 @@ export default {
   "myClusters.play.errorParsing": "Error parsing file",
   "myClusters.play.errorValidating": "CSV file does not have necessary field or there are some incorrect",
 
-  "instructions.title": "Instrutions",
-  "instructions.keyboard": "Keyboard and mouse",
-  "instructions.keyboard.camera": "",
-  "instructions.keyboard.zoom": "",
-  "instructions.keyboard.move": "",
-  "instructions.touch": "Touch screen",
+  "instructions.title": "Instructions",
+  "instructions.basic.title": "Basic Instructions",
+  "instructions.basic.modes": "The application has two modes to view the stars:",
+  "instructions.basic.modes.orbit": "The camera moves by orbiting the center of mass of the cluster",
+  "instructions.basic.modes.firstPerson": "In this mode, you can look in any direction and move freely",
+  "instructions.basic.modes.choose":
+    "You can <b>switch between different modes</b> using the <b>camera controls</b> inside the <b>sidebar</b>",
+  "instructions.keyboard": "Keyboard and Mouse",
+  "instructions.keyboard.camera": "To <b>move the camera</b>, use the left mouse button by clicking and dragging",
+  "instructions.keyboard.zoom": "The camera <b>zoom</b> is controlled by the mouse wheel",
+  "instructions.keyboard.click": "Clicking on a star will display its details",
+  "instructions.keyboard.move":
+    "In first-person mode, <b>moving through space</b> is done using the <b>W, A, S, and D</b> keys",
+  "instructions.touch": "Touch Screen",
+  "instructions.touch.camera": "The <b>camera</b> will move by sliding your finger across the screen",
+  "instructions.touch.zoom":
+    "The <b>zoom</b> and <b>moving through space</b> are done by pinching the screen with two fingers",
+  "instructions.touch.touch":
+    "Touching a star will display its details. On touch devices, you need to be close to the star for the details to be shown",
+  "instructions.controls": "Controls",
 };

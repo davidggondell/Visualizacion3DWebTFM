@@ -90,7 +90,7 @@ export default {
   "instructions.basic.modes.orbit": "La cámara se mueve orbitando el centro de masas del cúmulo",
   "instructions.basic.modes.firstPerson": "En este modo se puede mirar a cualquier dirección y moverse libremente",
   "instructions.basic.modes.choose":
-    "Se puede <b>cambiar entre distintos modos</b> mediante los <b>controles de cámara</b> dentro de la aplicación disponibles en el <b>menu lateral</b>",
+    "Se puede <b>cambiar entre distintos modos</b> mediante los <b>controles de cámara</b> disponibles en el <b>menu lateral</b>",
   "instructions.keyboard": "Teclado y ratón",
   "instructions.keyboard.camera":
     "Para <b>mover la cámara</b> se utilizan el botón izquierdo del raton, pulsando y arrastrando",
